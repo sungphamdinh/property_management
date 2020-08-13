@@ -28,7 +28,7 @@ class HomeScreen extends StatelessWidget {
           ),
           SearchTextBox(_onSearchTerm),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               FlatButton.icon(
                   onPressed: () {},

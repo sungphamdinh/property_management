@@ -16,19 +16,29 @@ class _AddSpaceScreenState extends State<AddSpaceScreen> {
   final _addressInformationStateKey = GlobalKey<AddAddressState>();
   final _imagesAndUtilitiesStateKey = GlobalKey<ImagesAndUtilitiesState>();
   final _confirmationStateKey = GlobalKey<ConfirmationState>();
-  int _currentStep = 0;
+
   final _maxStep = 4;
+
   Map<String, dynamic> _roomInformationData;
   Map<String, dynamic> _addressInfoData;
   Map<String, dynamic> imagesAndUtilitiesData;
 
-  void onContinuePressed() {
+  StepState _roomInfoStepState = StepState.editing;
+  StepState _addressStepState = StepState.indexed;
+  StepState _imagesAndUtilitiesStepState = StepState.indexed;
+  StepState _confirmationStepState = StepState.indexed;
+
+  int _currentStep = 0;
+
+  void _onNext() {
     switch (_currentStep) {
       case 0:
         _roomInformationData = _roomInformationStateKey.currentState.saveForm();
         if (_roomInformationData != null) {
           setState(() {
             _currentStep += 1;
+            _roomInfoStepState = StepState.complete;
+            _addressStepState = StepState.editing;
           });
         }
         break;
@@ -38,6 +48,8 @@ class _AddSpaceScreenState extends State<AddSpaceScreen> {
         if (_addressInfoData != null) {
           setState(() {
             _currentStep += 1;
+            _addressStepState = StepState.complete;
+            _imagesAndUtilitiesStepState = StepState.editing;
           });
         }
         break;
@@ -47,6 +59,8 @@ class _AddSpaceScreenState extends State<AddSpaceScreen> {
         if (imagesAndUtilitiesData != null) {
           setState(() {
             _currentStep += 1;
+            _imagesAndUtilitiesStepState = StepState.complete;
+            _confirmationStepState = StepState.editing;
           });
         }
         break;
@@ -55,12 +69,37 @@ class _AddSpaceScreenState extends State<AddSpaceScreen> {
     }
   }
 
+  void _onBack() {
+    switch (_currentStep) {
+      case 0:
+        break;
+      case 1:
+        _roomInfoStepState = StepState.editing;
+        _addressStepState = StepState.indexed;
+        break;
+      case 2:
+        _addressStepState = StepState.editing;
+        _imagesAndUtilitiesStepState = StepState.indexed;
+        break;
+      case 3:
+        _imagesAndUtilitiesStepState = StepState.editing;
+        _confirmationStepState = StepState.indexed;
+        break;
+      default:
+        break;
+    }
+    setState(() {
+      if (_currentStep != 0) _currentStep -= 1;
+    });
+  }
+
   void createNewSpace() {}
 
-  void onDone() {
+  void _onDone() {
     final confirmationData =
         _confirmationStateKey.currentState.saveConfirmationForm();
     if (confirmationData != null) {
+      _confirmationStepState = StepState.complete;
       showDialog(
           context: context,
           builder: (ctx) {
@@ -81,7 +120,7 @@ class _AddSpaceScreenState extends State<AddSpaceScreen> {
     }
   }
 
-  bool isLastStep() {
+  bool _isLastStep() {
     return _currentStep == _maxStep - 1;
   }
 
@@ -104,31 +143,34 @@ class _AddSpaceScreenState extends State<AddSpaceScreen> {
                   content: RoomInformation(
                     key: _roomInformationStateKey,
                   ),
-                  isActive: true),
+                  isActive: _currentStep == 0,
+                  state: _roomInfoStepState),
               Step(
                   title: const Text("Address", style: TextStyle(fontSize: 18)),
                   content: AddAddress(
                     key: _addressInformationStateKey,
-                  )),
+                  ),
+                  state: _addressStepState,
+                  isActive: _currentStep == 1),
               Step(
                   title: const Text("Images and Utilities",
                       style: TextStyle(fontSize: 18)),
                   content: ImagesAndUtilities(
                     key: _imagesAndUtilitiesStateKey,
-                  )),
+                  ),
+                  state: _imagesAndUtilitiesStepState,
+                  isActive: _currentStep == 2),
               Step(
                   title: const Text("Confirmation",
                       style: TextStyle(fontSize: 18)),
                   content: Confirmation(
                     key: _confirmationStateKey,
-                  )),
+                  ),
+                  state: _confirmationStepState,
+                  isActive: _currentStep == _maxStep - 1),
             ],
-            onStepContinue: isLastStep() ? onDone : onContinuePressed,
-            onStepCancel: () {
-              setState(() {
-                if (_currentStep != 0) _currentStep -= 1;
-              });
-            },
+            onStepContinue: _isLastStep() ? _onDone : _onNext,
+            onStepCancel: _onBack,
             currentStep: _currentStep,
             controlsBuilder: (ctx, {onStepContinue, onStepCancel}) {
               return Container(
@@ -141,7 +183,7 @@ class _AddSpaceScreenState extends State<AddSpaceScreen> {
                       onPressed: onStepCancel,
                     ),
                     RaisedButton(
-                      child: Text(isLastStep() ? 'Done' : 'Next'),
+                      child: Text(_isLastStep() ? 'Done' : 'Next'),
                       onPressed: onStepContinue,
                     )
                   ],
