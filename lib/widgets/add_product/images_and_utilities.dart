@@ -60,101 +60,98 @@ class ImagesAndUtilitiesState extends State<ImagesAndUtilities> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              "Images",
+              style: TextStyle(fontSize: 16),
+            ),
+            FlatButton(
+              child: const Text("Remove All"),
+              onPressed: () {},
+              textColor: Colors.redAccent,
+            )
+          ],
+        ),
+        Container(
+          padding: EdgeInsets.all(8),
+          decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
+          child: Column(
             children: [
-              const Text(
-                "Images",
-                style: TextStyle(fontSize: 16),
+              Container(
+                height: _SizeCalculationHelper._getImageGridHeight(
+                    _pickedImages.length, _imageHeight),
+                child: GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      mainAxisSpacing: 8,
+                      crossAxisSpacing: 8),
+                  itemBuilder: (ctx, index) {
+                    return ImageItem(_imageHeight, _pickedImages[index], () {
+                      setState(() {
+                        _pickedImages.removeAt(index);
+                      });
+                    });
+                  },
+                  itemCount: _pickedImages.length,
+                ),
               ),
-              FlatButton(
-                child: const Text("Remove All"),
-                onPressed: () {},
-                textColor: Colors.redAccent,
+              SizedBox(
+                height: 4,
+              ),
+              const Text(
+                "Limit at least 4 images, maximum of 20 images and do not exceed over 10mb",
+                textAlign: TextAlign.center,
               )
             ],
           ),
-          Container(
-            padding: EdgeInsets.all(8),
-            decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
-            child: Column(
-              children: [
-                Container(
-                  height: _SizeCalculationHelper._getImageGridHeight(
-                      _pickedImages.length, _imageHeight),
-                  child: GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        mainAxisSpacing: 8,
-                        crossAxisSpacing: 8),
-                    itemBuilder: (ctx, index) {
-                      return ImageItem(_imageHeight, _pickedImages[index], () {
-                        setState(() {
-                          _pickedImages.removeAt(index);
-                        });
-                      });
-                    },
-                    itemCount: _pickedImages.length,
-                  ),
-                ),
-                SizedBox(
-                  height: 4,
-                ),
-                const Text(
-                  "Limit at least 4 images, maximum of 20 images and do not exceed over 10mb",
-                  textAlign: TextAlign.center,
-                )
-              ],
-            ),
+        ),
+        SizedBox(
+          height: 4,
+        ),
+        _errors['imagesError'].isEmpty
+            ? const SizedBox()
+            : Text(
+                _errors['imagesError'],
+                style: TextStyle(color: Theme.of(context).errorColor),
+              ),
+        SizedBox(
+          height: 8,
+        ),
+        FlatButton.icon(
+          onPressed: () => _pickImage(ImageSource.gallery),
+          icon: Icon(Icons.camera),
+          label: Text("Take a picture"),
+          textColor: Theme.of(context).accentColor,
+        ),
+        Row(
+          children: [Text("Utilities", style: TextStyle(fontSize: 16))],
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        Container(
+          height:
+              _SizeCalculationHelper.getUtilityGridHeight(_utilities.length),
+          child: GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 8,
+                crossAxisSpacing: 8,
+                childAspectRatio: 3 / 1),
+            itemBuilder: (ctx, index) {
+              return UtilityItem(_utilities[index].name, _utilities[index].icon,
+                  (isSelected) {
+                _utilities[index].setSelection(isSelected);
+              });
+            },
+            itemCount: _utilities.length,
           ),
-          SizedBox(
-            height: 4,
-          ),
-          _errors['imagesError'].isEmpty
-              ? const SizedBox()
-              : Text(
-                  _errors['imagesError'],
-                  style: TextStyle(color: Theme.of(context).errorColor),
-                ),
-          SizedBox(
-            height: 8,
-          ),
-          FlatButton.icon(
-            onPressed: () => _pickImage(ImageSource.gallery),
-            icon: Icon(Icons.camera),
-            label: Text("Take a picture"),
-            textColor: Theme.of(context).accentColor,
-          ),
-          Row(
-            children: [Text("Utilities", style: TextStyle(fontSize: 16))],
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Container(
-            height:
-                _SizeCalculationHelper.getUtilityGridHeight(_utilities.length),
-            child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 8,
-                  crossAxisSpacing: 8,
-                  childAspectRatio: 3 / 1),
-              itemBuilder: (ctx, index) {
-                return UtilityItem(
-                    _utilities[index].name, _utilities[index].icon,
-                    (isSelected) {
-                  _utilities[index].setSelection(isSelected);
-                });
-              },
-              itemCount: _utilities.length,
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

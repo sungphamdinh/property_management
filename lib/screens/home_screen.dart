@@ -65,7 +65,7 @@ class HomeScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
-          Navigator.of(context).pushNamed(AddProperty.routeName);
+          Navigator.of(context).pushNamed(AddPropertyScreen.routeName);
         },
       ),
     );

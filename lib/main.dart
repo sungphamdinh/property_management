@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import './screens/flash_screen.dart';
 import './providers/auth.dart';
 import './providers/properties.dart';
 import './screens/add_property_screen.dart';
@@ -37,6 +38,8 @@ class MyApp extends StatelessWidget {
         home: StreamBuilder(
           stream: FirebaseAuth.instance.onAuthStateChanged,
           builder: (ctx, userSnapshot) {
+            if (userSnapshot.connectionState == ConnectionState.waiting)
+              return FlashScreen();
             if (userSnapshot.hasData) {
               return HomeScreen();
             } else {
@@ -44,7 +47,7 @@ class MyApp extends StatelessWidget {
             }
           },
         ),
-        routes: {AddProperty.routeName: (ctx) => AddProperty()},
+        routes: {AddPropertyScreen.routeName: (ctx) => AddPropertyScreen()},
       ),
     );
   }
