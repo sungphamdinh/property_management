@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImagesAndUtilities extends StatefulWidget {
+  ImagesAndUtilities({Key key}) : super(key: key);
   @override
   ImagesAndUtilitiesState createState() => ImagesAndUtilitiesState();
 }
@@ -14,14 +15,32 @@ class ImagesAndUtilities extends StatefulWidget {
 class ImagesAndUtilitiesState extends State<ImagesAndUtilities> {
   final double _imageHeight = 60;
   final _pickedImages = [];
+
+  // TODO: should get this data from static resource like json file?
   final _utilities = [
     Utility('Private WC', Icons.wc),
-    Utility('Parking', Icons.local_parking)
+    Utility('Parking', Icons.local_parking),
+    Utility('Internet', Icons.wifi),
+    Utility('Security', Icons.security),
+    Utility('Window', Icons.desktop_windows),
   ];
+  final _errors = {'imagesError': ''};
 
   Map<String, dynamic> saveUtilitiesAndImages() {
-    if (_pickedImages.length < 4) return null;
-    return {'pickedImages': _pickedImages, 'pickedUtilities': _utilities};
+    if (_validateData()) {
+      return {'pickedImages': _pickedImages, 'pickedUtilities': _utilities};
+    }
+    return null;
+  }
+
+  bool _validateData() {
+    if (_pickedImages.length < 4) {
+      setState(() {
+        _errors['imagesError'] = 'Please add at least 4 room images';
+      });
+      return false;
+    }
+    return true;
   }
 
   void _pickImage(ImageSource source) async {
@@ -32,6 +51,9 @@ class ImagesAndUtilitiesState extends State<ImagesAndUtilities> {
       final pickedImageFile = File(imageFile.path);
       setState(() {
         _pickedImages.add(pickedImageFile);
+        if (_pickedImages.length > 3) {
+          _errors['imagesError'] = '';
+        }
       });
     }
   }
@@ -78,10 +100,6 @@ class ImagesAndUtilitiesState extends State<ImagesAndUtilities> {
                     itemCount: _pickedImages.length,
                   ),
                 ),
-                const Text(
-                  "Post more images",
-                  style: TextStyle(fontSize: 16, color: Colors.blueAccent),
-                ),
                 SizedBox(
                   height: 4,
                 ),
@@ -92,6 +110,15 @@ class ImagesAndUtilitiesState extends State<ImagesAndUtilities> {
               ],
             ),
           ),
+          SizedBox(
+            height: 4,
+          ),
+          _errors['imagesError'].isEmpty
+              ? const SizedBox()
+              : Text(
+                  _errors['imagesError'],
+                  style: TextStyle(color: Theme.of(context).errorColor),
+                ),
           SizedBox(
             height: 8,
           ),
@@ -117,12 +144,15 @@ class ImagesAndUtilitiesState extends State<ImagesAndUtilities> {
                   crossAxisSpacing: 8,
                   childAspectRatio: 3 / 1),
               itemBuilder: (ctx, index) {
-                return UtilityItem(_utilities[index].name,
-                    _utilities[index].icon, (isSelected) {});
+                return UtilityItem(
+                    _utilities[index].name, _utilities[index].icon,
+                    (isSelected) {
+                  _utilities[index].setSelection(isSelected);
+                });
               },
               itemCount: _utilities.length,
             ),
-          )
+          ),
         ],
       ),
     );

@@ -13,7 +13,7 @@ class AddProperty extends StatefulWidget {
 class _AddPropertyState extends State<AddProperty> {
   final _roomInformationStateKey = GlobalKey<RoomInformationState>();
   final _addressInformationStateKey = GlobalKey<AddAddressState>();
-  final _imagesAndUtilitiesStateKey = GlobalKey<AddAddressState>();
+  final _imagesAndUtilitiesStateKey = GlobalKey<ImagesAndUtilitiesState>();
   int _currentStep = 0;
   Map<String, dynamic> _roomInformationJson;
   Map<String, dynamic> _addressInfoJson;
@@ -46,7 +46,9 @@ class _AddPropertyState extends State<AddProperty> {
               Step(
                   title: const Text("Images and Utilities",
                       style: TextStyle(fontSize: 18)),
-                  content: ImagesAndUtilities()),
+                  content: ImagesAndUtilities(
+                    key: _imagesAndUtilitiesStateKey,
+                  )),
               Step(
                   title: const Text("Confirmation",
                       style: TextStyle(fontSize: 18)),
@@ -69,6 +71,16 @@ class _AddPropertyState extends State<AddProperty> {
                   _addressInfoJson = _addressInformationStateKey.currentState
                       .saveAddressInfo();
                   if (_addressInfoJson != null) {
+                    setState(() {
+                      _currentStep += 1;
+                    });
+                  }
+                  break;
+                case 2:
+                  final imagesAndUtilitiesJson = _imagesAndUtilitiesStateKey
+                      .currentState
+                      .saveUtilitiesAndImages();
+                  if (imagesAndUtilitiesJson != null) {
                     setState(() {
                       _currentStep += 1;
                     });
