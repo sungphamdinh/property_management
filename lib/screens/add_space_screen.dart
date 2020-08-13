@@ -1,49 +1,50 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/add_product/confirmation.dart';
-import '../widgets/add_product/add_address.dart';
-import '../widgets/add_product/images_and_utilities.dart';
-import '../widgets/add_product/room_information.dart';
+import '../widgets/add_space/confirmation.dart';
+import '../widgets/add_space/add_address.dart';
+import '../widgets/add_space/images_and_utilities.dart';
+import '../widgets/add_space/room_information.dart';
 
-class AddPropertyScreen extends StatefulWidget {
+class AddSpaceScreen extends StatefulWidget {
   static const routeName = "/add-product";
   @override
-  _AddPropertyScreenState createState() => _AddPropertyScreenState();
+  _AddSpaceScreenState createState() => _AddSpaceScreenState();
 }
 
-class _AddPropertyScreenState extends State<AddPropertyScreen> {
+class _AddSpaceScreenState extends State<AddSpaceScreen> {
   final _roomInformationStateKey = GlobalKey<RoomInformationState>();
   final _addressInformationStateKey = GlobalKey<AddAddressState>();
   final _imagesAndUtilitiesStateKey = GlobalKey<ImagesAndUtilitiesState>();
   final _confirmationStateKey = GlobalKey<ConfirmationState>();
   int _currentStep = 0;
   final _maxStep = 4;
-  Map<String, dynamic> _roomInformationJson;
-  Map<String, dynamic> _addressInfoJson;
+  Map<String, dynamic> _roomInformationData;
+  Map<String, dynamic> _addressInfoData;
+  Map<String, dynamic> imagesAndUtilitiesData;
 
   void onContinuePressed() {
     switch (_currentStep) {
       case 0:
-        _roomInformationJson = _roomInformationStateKey.currentState.saveForm();
-        if (_roomInformationJson != null) {
+        _roomInformationData = _roomInformationStateKey.currentState.saveForm();
+        if (_roomInformationData != null) {
           setState(() {
             _currentStep += 1;
           });
         }
         break;
       case 1:
-        _addressInfoJson =
+        _addressInfoData =
             _addressInformationStateKey.currentState.saveAddressInfo();
-        if (_addressInfoJson != null) {
+        if (_addressInfoData != null) {
           setState(() {
             _currentStep += 1;
           });
         }
         break;
       case 2:
-        final imagesAndUtilitiesJson =
+        imagesAndUtilitiesData =
             _imagesAndUtilitiesStateKey.currentState.saveUtilitiesAndImages();
-        if (imagesAndUtilitiesJson != null) {
+        if (imagesAndUtilitiesData != null) {
           setState(() {
             _currentStep += 1;
           });

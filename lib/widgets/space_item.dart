@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 
-class PropertyItem extends StatelessWidget {
+class SpaceItem extends StatelessWidget {
   final String id;
   final String title;
   final String address;
   final double price;
   final String featureImageUrl;
-  PropertyItem(
+  SpaceItem(
       this.id, this.title, this.address, this.price, this.featureImageUrl);
 
   @override

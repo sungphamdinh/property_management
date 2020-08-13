@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'room.dart';
+part of 'space.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Room _$RoomFromJson(Map<String, dynamic> json) {
-  return Room(
+Space _$RoomFromJson(Map<String, dynamic> json) {
+  return Space(
     id: json['id'] as String,
     roomType: _$enumDecodeNullable(_$RoomTypeEnumMap, json['roomType']) ??
         RoomType.roomForShare,
@@ -22,7 +22,7 @@ Room _$RoomFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$RoomToJson(Room instance) => <String, dynamic>{
+Map<String, dynamic> _$RoomToJson(Space instance) => <String, dynamic>{
       'id': instance.id,
       'roomType': _$RoomTypeEnumMap[instance.roomType],
       'numberOfRooms': instance.numberOfRooms,

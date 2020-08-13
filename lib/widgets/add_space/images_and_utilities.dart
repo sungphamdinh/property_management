@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import '../../models/utility.dart';
-import '../../widgets/add_product/image_item.dart';
-import '../../widgets/add_product/utility_item.dart';
+import '../../widgets/add_space//image_item.dart';
+import '../../widgets/add_space/utility_item.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../models/room.dart';
+import '../../models/space.dart';
 import '../../shared/validation.dart';
 
 class RoomInformation extends StatefulWidget {
@@ -14,7 +14,7 @@ class RoomInformationState extends State<RoomInformation> {
   bool _isWaterCostFree = false;
   static const double textFieldFormWidth = 250;
   final _formKey = GlobalKey<FormState>();
-  final _formData = Room.createEmptyJsonRoom();
+  final _formData = Space.createEmptyJsonRoom();
   RoomType _currentRoomType = RoomType.roomForRent;
   final _electricityCostEditor = TextEditingController();
   final _waterCostEditor = TextEditingController();

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/properties.dart';
-import '../screens/add_property_screen.dart';
+import '../providers/spaces.dart';
+import '../screens/add_space_screen.dart';
 import '../widgets/drawer_menu.dart';
-import '../widgets/property_item.dart';
+import '../widgets/space_item.dart';
 import '../widgets/search_text_box.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -51,7 +51,7 @@ class HomeScreen extends StatelessWidget {
                       crossAxisSpacing: 8),
                   itemBuilder: (ctx, index) {
                     final property = properties[index];
-                    return PropertyItem(
+                    return SpaceItem(
                         property.id,
                         property.title,
                         property.address,
@@ -65,7 +65,7 @@ class HomeScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
-          Navigator.of(context).pushNamed(AddPropertyScreen.routeName);
+          Navigator.of(context).pushNamed(AddSpaceScreen.routeName);
         },
       ),
     );

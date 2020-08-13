@@ -1,11 +1,11 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'room.g.dart';
+part 'space.g.dart';
 
 enum RoomType { roomForRent, roomForShare, house, apartment }
 
 @JsonSerializable()
-class Room {
+class Space {
   @JsonKey(required: true)
   String id;
 
@@ -23,7 +23,7 @@ class Room {
   @JsonKey(defaultValue: false)
   final bool isSpaceForParking;
 
-  Room(
+  Space(
       {this.id,
       this.roomType,
       this.numberOfRooms,
@@ -35,11 +35,11 @@ class Room {
       this.waterCost,
       this.isSpaceForParking});
 
-  factory Room.fromJson(Map<String, dynamic> json) => _$RoomFromJson(json);
+  factory Space.fromJson(Map<String, dynamic> json) => _$RoomFromJson(json);
   Map<String, dynamic> toJson() => _$RoomToJson(this);
 
   static Map<String, dynamic> createEmptyJsonRoom() {
-    final room = Room(
+    final room = Space(
         id: "",
         roomType: RoomType.roomForRent,
         numberOfRooms: 0,

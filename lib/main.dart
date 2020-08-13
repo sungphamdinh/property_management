@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 
 import './screens/flash_screen.dart';
 import './providers/auth.dart';
-import './providers/properties.dart';
-import './screens/add_property_screen.dart';
+import './providers/spaces.dart';
+import './screens/add_space_screen.dart';
 import './screens/auth_screen.dart';
 import './screens/home_screen.dart';
 
@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
             }
           },
         ),
-        routes: {AddPropertyScreen.routeName: (ctx) => AddPropertyScreen()},
+        routes: {AddSpaceScreen.routeName: (ctx) => AddSpaceScreen()},
       ),
     );
   }
