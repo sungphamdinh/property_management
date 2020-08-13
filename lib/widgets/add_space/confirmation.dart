@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:property_management/shared/validation.dart';
 
 class Confirmation extends StatefulWidget {
   Confirmation({Key key}) : super(key: key);
@@ -26,10 +27,14 @@ class ConfirmationState extends State<Confirmation> {
       child: Column(
         children: [
           TextFormField(
+            keyboardType: TextInputType.number,
             decoration: InputDecoration(labelText: 'Phone number'),
             validator: (value) {
               if (value.isEmpty) {
                 return 'Please enter your phone number';
+              }
+              if (Validation.isValidPhoneNumber(value)) {
+                return 'Please enter a valid phone number';
               }
               return null;
             },

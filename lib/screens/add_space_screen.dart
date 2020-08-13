@@ -5,6 +5,13 @@ import '../widgets/add_space/add_address.dart';
 import '../widgets/add_space/images_and_utilities.dart';
 import '../widgets/add_space/room_information.dart';
 
+enum AddSpaceSteps {
+  roomInformation,
+  address,
+  imagesAndUtilities,
+  confirmation
+}
+
 class AddSpaceScreen extends StatefulWidget {
   static const routeName = "/add-product";
   @override
@@ -17,8 +24,6 @@ class _AddSpaceScreenState extends State<AddSpaceScreen> {
   final _imagesAndUtilitiesStateKey = GlobalKey<ImagesAndUtilitiesState>();
   final _confirmationStateKey = GlobalKey<ConfirmationState>();
 
-  final _maxStep = 4;
-
   Map<String, dynamic> _roomInformationData;
   Map<String, dynamic> _addressInfoData;
   Map<String, dynamic> imagesAndUtilitiesData;
@@ -28,65 +33,51 @@ class _AddSpaceScreenState extends State<AddSpaceScreen> {
   StepState _imagesAndUtilitiesStepState = StepState.indexed;
   StepState _confirmationStepState = StepState.indexed;
 
-  int _currentStep = 0;
+  int _currentStep = AddSpaceSteps.roomInformation.index;
 
   void _onNext() {
-    switch (_currentStep) {
-      case 0:
-        _roomInformationData = _roomInformationStateKey.currentState.saveForm();
-        if (_roomInformationData != null) {
-          setState(() {
-            _currentStep += 1;
-            _roomInfoStepState = StepState.complete;
-            _addressStepState = StepState.editing;
-          });
-        }
-        break;
-      case 1:
-        _addressInfoData =
-            _addressInformationStateKey.currentState.saveAddressInfo();
-        if (_addressInfoData != null) {
-          setState(() {
-            _currentStep += 1;
-            _addressStepState = StepState.complete;
-            _imagesAndUtilitiesStepState = StepState.editing;
-          });
-        }
-        break;
-      case 2:
-        imagesAndUtilitiesData =
-            _imagesAndUtilitiesStateKey.currentState.saveUtilitiesAndImages();
-        if (imagesAndUtilitiesData != null) {
-          setState(() {
-            _currentStep += 1;
-            _imagesAndUtilitiesStepState = StepState.complete;
-            _confirmationStepState = StepState.editing;
-          });
-        }
-        break;
-      default:
-        break;
+    if (_currentStep == AddSpaceSteps.roomInformation.index) {
+      _roomInformationData = _roomInformationStateKey.currentState.saveForm();
+      if (_roomInformationData != null) {
+        setState(() {
+          _currentStep += 1;
+          _roomInfoStepState = StepState.complete;
+          _addressStepState = StepState.editing;
+        });
+      }
+    } else if (_currentStep == AddSpaceSteps.address.index) {
+      _addressInfoData =
+          _addressInformationStateKey.currentState.saveAddressInfo();
+      if (_addressInfoData != null) {
+        setState(() {
+          _currentStep += 1;
+          _addressStepState = StepState.complete;
+          _imagesAndUtilitiesStepState = StepState.editing;
+        });
+      }
+    } else if (_currentStep == AddSpaceSteps.imagesAndUtilities.index) {
+      imagesAndUtilitiesData =
+          _imagesAndUtilitiesStateKey.currentState.saveUtilitiesAndImages();
+      if (imagesAndUtilitiesData != null) {
+        setState(() {
+          _currentStep += 1;
+          _imagesAndUtilitiesStepState = StepState.complete;
+          _confirmationStepState = StepState.editing;
+        });
+      }
     }
   }
 
   void _onBack() {
-    switch (_currentStep) {
-      case 0:
-        break;
-      case 1:
-        _roomInfoStepState = StepState.editing;
-        _addressStepState = StepState.indexed;
-        break;
-      case 2:
-        _addressStepState = StepState.editing;
-        _imagesAndUtilitiesStepState = StepState.indexed;
-        break;
-      case 3:
-        _imagesAndUtilitiesStepState = StepState.editing;
-        _confirmationStepState = StepState.indexed;
-        break;
-      default:
-        break;
+    if (_currentStep == AddSpaceSteps.address.index) {
+      _roomInfoStepState = StepState.editing;
+      _addressStepState = StepState.indexed;
+    } else if (_currentStep == AddSpaceSteps.imagesAndUtilities.index) {
+      _addressStepState = StepState.editing;
+      _imagesAndUtilitiesStepState = StepState.indexed;
+    } else if (_currentStep == AddSpaceSteps.confirmation.index) {
+      _imagesAndUtilitiesStepState = StepState.editing;
+      _confirmationStepState = StepState.indexed;
     }
     setState(() {
       if (_currentStep != 0) _currentStep -= 1;
@@ -104,14 +95,14 @@ class _AddSpaceScreenState extends State<AddSpaceScreen> {
           context: context,
           builder: (ctx) {
             return AlertDialog(
-              title: Text('Please confirm you want to create new space?'),
+              title: const Text('Please confirm you want to create new space?'),
               actions: [
                 RaisedButton(
-                  child: Text("Cancel"),
+                  child: const Text("Cancel"),
                   onPressed: () => Navigator.of(context).pop(),
                 ),
                 RaisedButton(
-                  child: Text("Ok"),
+                  child: const Text("Ok"),
                   onPressed: createNewSpace,
                 )
               ],
@@ -121,14 +112,14 @@ class _AddSpaceScreenState extends State<AddSpaceScreen> {
   }
 
   bool _isLastStep() {
-    return _currentStep == _maxStep - 1;
+    return _currentStep == AddSpaceSteps.confirmation.index;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Add your space"),
+        title: const Text("Add your space"),
       ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
@@ -143,7 +134,7 @@ class _AddSpaceScreenState extends State<AddSpaceScreen> {
                   content: RoomInformation(
                     key: _roomInformationStateKey,
                   ),
-                  isActive: _currentStep == 0,
+                  isActive: _currentStep == AddSpaceSteps.roomInformation.index,
                   state: _roomInfoStepState),
               Step(
                   title: const Text("Address", style: TextStyle(fontSize: 18)),
@@ -151,7 +142,7 @@ class _AddSpaceScreenState extends State<AddSpaceScreen> {
                     key: _addressInformationStateKey,
                   ),
                   state: _addressStepState,
-                  isActive: _currentStep == 1),
+                  isActive: _currentStep == AddSpaceSteps.address.index),
               Step(
                   title: const Text("Images and Utilities",
                       style: TextStyle(fontSize: 18)),
@@ -159,7 +150,8 @@ class _AddSpaceScreenState extends State<AddSpaceScreen> {
                     key: _imagesAndUtilitiesStateKey,
                   ),
                   state: _imagesAndUtilitiesStepState,
-                  isActive: _currentStep == 2),
+                  isActive:
+                      _currentStep == AddSpaceSteps.imagesAndUtilities.index),
               Step(
                   title: const Text("Confirmation",
                       style: TextStyle(fontSize: 18)),
@@ -167,7 +159,7 @@ class _AddSpaceScreenState extends State<AddSpaceScreen> {
                     key: _confirmationStateKey,
                   ),
                   state: _confirmationStepState,
-                  isActive: _currentStep == _maxStep - 1),
+                  isActive: _currentStep == AddSpaceSteps.confirmation.index),
             ],
             onStepContinue: _isLastStep() ? _onDone : _onNext,
             onStepCancel: _onBack,
@@ -179,7 +171,7 @@ class _AddSpaceScreenState extends State<AddSpaceScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     RaisedButton(
-                      child: Text('Back'),
+                      child: const Text('Back'),
                       onPressed: onStepCancel,
                     ),
                     RaisedButton(

@@ -71,7 +71,11 @@ class ImagesAndUtilitiesState extends State<ImagesAndUtilities> {
             ),
             FlatButton(
               child: const Text("Remove All"),
-              onPressed: () {},
+              onPressed: () {
+                setState(() {
+                  _pickedImages.clear();
+                });
+              },
               textColor: Colors.redAccent,
             )
           ],
@@ -85,6 +89,7 @@ class ImagesAndUtilitiesState extends State<ImagesAndUtilities> {
                 height: _SizeCalculationHelper._getImageGridHeight(
                     _pickedImages.length, _imageHeight),
                 child: GridView.builder(
+                  physics: new NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
                       mainAxisSpacing: 8,
@@ -137,6 +142,7 @@ class ImagesAndUtilitiesState extends State<ImagesAndUtilities> {
           height:
               _SizeCalculationHelper.getUtilityGridHeight(_utilities.length),
           child: GridView.builder(
+            physics: new NeverScrollableScrollPhysics(),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 mainAxisSpacing: 8,
