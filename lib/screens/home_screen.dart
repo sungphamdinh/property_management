@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import '../providers/spaces.dart';
 import '../screens/add_space_screen.dart';
 import '../widgets/drawer_menu.dart';
-import '../widgets/space_item.dart';
 import '../widgets/search_text_box.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -14,7 +13,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final properties = Provider.of<Properties>(context).properties;
+    final properties = Provider.of<Spaces>(context).spaces;
     return Scaffold(
       appBar: AppBar(
         title: Text('Home'),
@@ -42,23 +41,17 @@ class HomeScreen extends StatelessWidget {
           ),
           Expanded(
             child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 8),
-              child: GridView.builder(
-                  itemCount: properties.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 8,
-                      crossAxisSpacing: 8),
-                  itemBuilder: (ctx, index) {
-                    final property = properties[index];
-                    return SpaceItem(
-                        property.id,
-                        property.title,
-                        property.address,
-                        property.price,
-                        property.imageUrls[0]);
-                  }),
-            ),
+                margin: EdgeInsets.symmetric(horizontal: 8),
+                child: GridView.builder(
+                    itemCount: properties.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 8,
+                        crossAxisSpacing: 8),
+                    itemBuilder: (ctx, index) {
+                      final property = properties[index];
+                      return Container();
+                    })),
           )
         ],
       ),

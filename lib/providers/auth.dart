@@ -8,13 +8,18 @@ import 'package:flutter/services.dart';
 class Auth with ChangeNotifier {
   final _auth = FirebaseAuth.instance;
 
+  String _userId;
   bool _isLoading = false;
+
   bool get isLoading => _isLoading;
+  String get userId => _userId;
 
   Future<void> loginWithUser(String email, String password) async {
     _isLoading = true;
     try {
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      final authResult = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      _userId = authResult.user.uid;
       _isLoading = false;
       notifyListeners();
     } on PlatformException catch (error) {

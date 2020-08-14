@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-
 import '../models/address.dart';
 import '../models/owner.dart';
 import '../shared/helper.dart';
@@ -13,7 +11,7 @@ const RoomTypeMaps = {
 };
 
 class Space {
-  final String id;
+  String _id;
   final RoomType roomType;
   final int numberOfRooms;
   final int capacity;
@@ -27,10 +25,10 @@ class Space {
   final String postTitle;
   final String description;
   final bool isSpaceForParking;
+  final List<String> imageUrls;
 
   Space(
-      {@required this.id,
-      this.roomType,
+      {this.roomType,
       this.numberOfRooms,
       this.capacity,
       this.roomArea,
@@ -42,11 +40,21 @@ class Space {
       this.address,
       this.owner,
       this.postTitle,
-      this.description});
+      this.description,
+      this.imageUrls});
+
+  void setId(String id) {
+    this._id = id;
+  }
+
+  String get id => _id;
+
+  static String convertRoomType(RoomType roomType) {
+    return RoomTypeMaps[roomType];
+  }
 
   factory Space.fromJson(Map<String, dynamic> json) {
     return Space(
-        id: json['id'],
         roomType: Helper.encodeEnum(
             RoomTypeMaps, json['roomType'], RoomType.roomForShare),
         numberOfRooms: json['numberOfRooms'],
@@ -59,11 +67,11 @@ class Space {
         postTitle: json['postTitle'],
         description: json['description'],
         address: Address.fromJson(json['address']),
-        owner: Owner.fromJson(json['owner']));
+        owner: Owner.fromJson(json['owner']),
+        imageUrls: json['imageUrls']);
   }
   Map<String, dynamic> toJson() {
     return {
-      'id': this.id,
       'roomType': RoomTypeMaps[this.roomType],
       'numberOfRooms': this.numberOfRooms,
       'capacity': this.capacity,
@@ -76,21 +84,7 @@ class Space {
       'description': this.description,
       'address': this.address.toJson(),
       'owner': this.owner.toJson(),
+      'imageUrls': this.imageUrls
     };
-  }
-
-  static Map<String, dynamic> createEmptyJsonRoom() {
-    final room = Space(
-        id: "",
-        roomType: RoomType.roomForRent,
-        numberOfRooms: 0,
-        capacity: 0,
-        roomArea: 0,
-        price: 0,
-        deposit: 0,
-        electricityCost: 0,
-        waterCost: 0,
-        isSpaceForParking: false);
-    return room.toJson();
   }
 }

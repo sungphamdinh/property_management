@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:property_management/models/space.dart';
+import 'package:property_management/providers/auth.dart';
+import 'package:property_management/providers/spaces.dart';
+import 'package:provider/provider.dart';
 
 import '../widgets/add_space/confirmation.dart';
 import '../widgets/add_space/add_address.dart';
@@ -26,7 +30,7 @@ class _AddSpaceScreenState extends State<AddSpaceScreen> {
 
   Map<String, dynamic> _roomInformationData;
   Map<String, dynamic> _addressInfoData;
-  Map<String, dynamic> imagesAndUtilitiesData;
+  Map<String, dynamic> _imagesAndUtilitiesData;
 
   StepState _roomInfoStepState = StepState.editing;
   StepState _addressStepState = StepState.indexed;
@@ -34,6 +38,8 @@ class _AddSpaceScreenState extends State<AddSpaceScreen> {
   StepState _confirmationStepState = StepState.indexed;
 
   int _currentStep = AddSpaceSteps.roomInformation.index;
+  Space currentSpace;
+  bool _isLoading = false;
 
   void _onNext() {
     if (_currentStep == AddSpaceSteps.roomInformation.index) {
@@ -56,9 +62,9 @@ class _AddSpaceScreenState extends State<AddSpaceScreen> {
         });
       }
     } else if (_currentStep == AddSpaceSteps.imagesAndUtilities.index) {
-      imagesAndUtilitiesData =
+      _imagesAndUtilitiesData =
           _imagesAndUtilitiesStateKey.currentState.saveUtilitiesAndImages();
-      if (imagesAndUtilitiesData != null) {
+      if (_imagesAndUtilitiesData != null) {
         setState(() {
           _currentStep += 1;
           _imagesAndUtilitiesStepState = StepState.complete;
@@ -84,7 +90,29 @@ class _AddSpaceScreenState extends State<AddSpaceScreen> {
     });
   }
 
-  void createNewSpace() {}
+  void createNewSpace(Map<String, dynamic> confirmationJson) async {
+    Map<String, dynamic> spaceJson = {};
+    final userId = Provider.of<Auth>(context, listen: false).userId;
+
+    spaceJson.addAll(_roomInformationData);
+    spaceJson.putIfAbsent('address', () => _addressInfoData);
+    spaceJson.putIfAbsent('owner',
+        () => {'id': userId, 'phoneNumber': confirmationJson['phoneNumber']});
+    spaceJson.addAll(confirmationJson);
+    spaceJson.addAll(_imagesAndUtilitiesData);
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    await Provider.of<Spaces>(context, listen: false).createNewSpace(spaceJson);
+
+    setState(() {
+      _isLoading = false;
+    });
+
+    Navigator.of(context).pop();
+  }
 
   void _onDone() {
     final confirmationData =
@@ -103,7 +131,10 @@ class _AddSpaceScreenState extends State<AddSpaceScreen> {
                 ),
                 RaisedButton(
                   child: const Text("Ok"),
-                  onPressed: createNewSpace,
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    createNewSpace(confirmationData);
+                  },
                 )
               ],
             );
@@ -174,10 +205,12 @@ class _AddSpaceScreenState extends State<AddSpaceScreen> {
                       child: const Text('Back'),
                       onPressed: onStepCancel,
                     ),
-                    RaisedButton(
-                      child: Text(_isLastStep() ? 'Done' : 'Next'),
-                      onPressed: onStepContinue,
-                    )
+                    _isLoading
+                        ? CircularProgressIndicator()
+                        : RaisedButton(
+                            child: Text(_isLastStep() ? 'Done' : 'Next'),
+                            onPressed: onStepContinue,
+                          )
                   ],
                 ),
               );

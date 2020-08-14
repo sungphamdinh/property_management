@@ -14,7 +14,17 @@ class RoomInformationState extends State<RoomInformation> {
   bool _isWaterCostFree = false;
   static const double textFieldFormWidth = 250;
   final _formKey = GlobalKey<FormState>();
-  final _formData = Space.createEmptyJsonRoom();
+  final _formData = {
+    'roomType': RoomType.roomForRent,
+    'numberOfRooms': 0,
+    'capacity': 0,
+    'roomArea': 0,
+    'price': 0,
+    'deposit': 0,
+    'electricityCost': 0,
+    'waterCost': 0,
+    'isSpaceForParking': false
+  };
   RoomType _currentRoomType = RoomType.roomForRent;
   final _electricityCostEditor = TextEditingController();
   final _waterCostEditor = TextEditingController();
@@ -149,7 +159,7 @@ class RoomInformationState extends State<RoomInformation> {
                     return null;
                   },
                   onSaved: (value) {
-                    _formData['price'] = int.parse(value);
+                    _formData['price'] = double.parse(value);
                   },
                 ),
               ),
@@ -165,7 +175,7 @@ class RoomInformationState extends State<RoomInformation> {
                 return null;
               },
               onSaved: (value) {
-                _formData['deposit'] = int.parse(value);
+                _formData['deposit'] = double.parse(value);
               },
             ),
             Row(

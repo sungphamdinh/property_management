@@ -13,8 +13,8 @@ class AddAddressState extends State<AddAddress> {
     'city': 'Ha Noi',
     'district': 'Quan 1',
     'ward': 'An Phu',
-    'street_name': '',
-    'house_number': ''
+    'streetName': '',
+    'houseNumber': ''
   };
 
   Map<String, dynamic> saveAddressInfo() {
@@ -125,7 +125,7 @@ class AddAddressState extends State<AddAddress> {
                   return null;
                 },
                 onSaved: (value) {
-                  _addressData['street_name'] = value;
+                  _addressData['streetName'] = value;
                 },
               ),
             ),
@@ -143,7 +143,7 @@ class AddAddressState extends State<AddAddress> {
                   return null;
                 },
                 onSaved: (value) {
-                  _addressData['house_number'] = value;
+                  _addressData['houseNumber'] = value;
                 },
               ),
             )

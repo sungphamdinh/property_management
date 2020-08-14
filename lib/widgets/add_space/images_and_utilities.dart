@@ -14,7 +14,7 @@ class ImagesAndUtilities extends StatefulWidget {
 
 class ImagesAndUtilitiesState extends State<ImagesAndUtilities> {
   final double _imageHeight = 60;
-  final _pickedImages = [];
+  final List<File> _pickedImages = [];
 
   // TODO: should get this data from static resource like json file?
   final _utilities = [
@@ -34,9 +34,9 @@ class ImagesAndUtilitiesState extends State<ImagesAndUtilities> {
   }
 
   bool _validateData() {
-    if (_pickedImages.length < 4) {
+    if (_pickedImages.length < 2) {
       setState(() {
-        _errors['imagesError'] = 'Please add at least 4 room images';
+        _errors['imagesError'] = 'Please add at least 2 room images';
       });
       return false;
     }
@@ -45,8 +45,8 @@ class ImagesAndUtilitiesState extends State<ImagesAndUtilities> {
 
   void _pickImage(ImageSource source) async {
     final imagePicker = ImagePicker();
-    final imageFile = await imagePicker.getImage(
-        source: source, imageQuality: 50, maxWidth: 150);
+    final imageFile =
+        await imagePicker.getImage(source: source, imageQuality: 80);
     if (imageFile != null) {
       final pickedImageFile = File(imageFile.path);
       setState(() {

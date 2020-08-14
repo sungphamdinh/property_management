@@ -5,7 +5,7 @@ class Helper {
       return fallBackValue;
     }
     final foundItem =
-        enumValues.entries.singleWhere((entry) => entry.key == source);
+        enumValues.entries.singleWhere((entry) => entry.value == source);
 
     if (foundItem == null) {
       return fallBackValue;
