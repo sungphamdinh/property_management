@@ -1,19 +1,20 @@
-import 'package:json_annotation/json_annotation.dart';
-import 'package:property_management/models/address.dart';
-import 'package:property_management/models/owner.dart';
+import 'package:flutter/cupertino.dart';
 
-part 'space.g.dart';
+import '../models/address.dart';
+import '../models/owner.dart';
+import '../shared/helper.dart';
 
 enum RoomType { roomForRent, roomForShare, house, apartment }
+const RoomTypeMaps = {
+  RoomType.roomForRent: 'room_for_rent',
+  RoomType.roomForShare: 'room_for_share',
+  RoomType.house: 'house',
+  RoomType.apartment: 'apartment',
+};
 
-@JsonSerializable()
 class Space {
-  @JsonKey(required: true)
-  String id;
-
-  @JsonKey(defaultValue: RoomType.roomForShare)
+  final String id;
   final RoomType roomType;
-
   final int numberOfRooms;
   final int capacity;
   final double roomArea;
@@ -25,12 +26,10 @@ class Space {
   final Owner owner;
   final String postTitle;
   final String description;
-
-  @JsonKey(defaultValue: false)
   final bool isSpaceForParking;
 
   Space(
-      {this.id,
+      {@required this.id,
       this.roomType,
       this.numberOfRooms,
       this.capacity,
@@ -45,8 +44,40 @@ class Space {
       this.postTitle,
       this.description});
 
-  factory Space.fromJson(Map<String, dynamic> json) => _$RoomFromJson(json);
-  Map<String, dynamic> toJson() => _$RoomToJson(this);
+  factory Space.fromJson(Map<String, dynamic> json) {
+    return Space(
+        id: json['id'],
+        roomType: Helper.encodeEnum(
+            RoomTypeMaps, json['roomType'], RoomType.roomForShare),
+        numberOfRooms: json['numberOfRooms'],
+        capacity: json['capacity'],
+        roomArea: json['roomArea'],
+        price: json['price'],
+        deposit: json['deposit'],
+        electricityCost: json['electricityCost'],
+        waterCost: json['waterCost'],
+        postTitle: json['postTitle'],
+        description: json['description'],
+        address: Address.fromJson(json['address']),
+        owner: Owner.fromJson(json['owner']));
+  }
+  Map<String, dynamic> toJson() {
+    return {
+      'id': this.id,
+      'roomType': RoomTypeMaps[this.roomType],
+      'numberOfRooms': this.numberOfRooms,
+      'capacity': this.capacity,
+      'roomArea': this.roomArea,
+      'price': this.price,
+      'deposit': this.deposit,
+      'electricityCost': this.electricityCost,
+      'waterCost': this.waterCost,
+      'postTitle': this.postTitle,
+      'description': this.description,
+      'address': this.address.toJson(),
+      'owner': this.owner.toJson(),
+    };
+  }
 
   static Map<String, dynamic> createEmptyJsonRoom() {
     final room = Space(
@@ -60,6 +91,6 @@ class Space {
         electricityCost: 0,
         waterCost: 0,
         isSpaceForParking: false);
-    return _$RoomToJson(room);
+    return room.toJson();
   }
 }
