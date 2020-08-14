@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:property_management/widgets/space_item.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/spaces.dart';
@@ -13,7 +14,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final properties = Provider.of<Spaces>(context).spaces;
+    final spaces = Provider.of<Spaces>(context).spaces;
     return Scaffold(
       appBar: AppBar(
         title: Text('Home'),
@@ -43,14 +44,19 @@ class HomeScreen extends StatelessWidget {
             child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 8),
                 child: GridView.builder(
-                    itemCount: properties.length,
+                    itemCount: spaces.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         mainAxisSpacing: 8,
                         crossAxisSpacing: 8),
                     itemBuilder: (ctx, index) {
-                      final property = properties[index];
-                      return Container();
+                      final space = spaces[index];
+                      return SpaceItem(
+                          id: space.id,
+                          title: space.postTitle,
+                          address: space.address.readableAddress,
+                          price: space.price,
+                          featureImageUrl: space.imageUrls[0]);
                     })),
           )
         ],

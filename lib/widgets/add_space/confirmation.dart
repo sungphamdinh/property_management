@@ -9,7 +9,7 @@ class Confirmation extends StatefulWidget {
 
 class ConfirmationState extends State<Confirmation> {
   final _formKey = GlobalKey<FormState>();
-  final _formData = {'phoneNumber': '', 'title': '', 'description': ''};
+  final _formData = {'phoneNumber': '', 'postTitle': '', 'description': ''};
 
   Map<String, dynamic> saveConfirmationForm() {
     final isValid = _formKey.currentState.validate();
@@ -55,7 +55,7 @@ class ConfirmationState extends State<Confirmation> {
                 return null;
               },
               onSaved: (value) {
-                _formData['title'] = value;
+                _formData['postTitle'] = value;
               }),
           SizedBox(
             height: 8,

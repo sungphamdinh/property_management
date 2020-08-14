@@ -8,8 +8,18 @@ import 'package:path/path.dart' as path;
 
 class Spaces with ChangeNotifier {
   final _fireStore = Firestore.instance;
+  static const spacesCollection = 'spaces';
+
   List<Space> _spaces = [];
   List<Space> get spaces => [..._spaces];
+
+  Future<void> getPlaces() async {
+    final snapshots =
+        await _fireStore.collection(spacesCollection).getDocuments();
+    snapshots.documents.map((document) {
+      print(document['id']);
+    });
+  }
 
   Future<void> createNewSpace(Map<String, dynamic> json) async {
     json['roomType'] = Space.convertRoomType(json['roomType']);
@@ -26,7 +36,7 @@ class Spaces with ChangeNotifier {
     json.remove('pickedUtilities');
     json.putIfAbsent('imageUrls', () => imageUrls);
 
-    final documentRef = await _fireStore.collection('spaces').add(json);
+    final documentRef = await _fireStore.collection(spacesCollection).add(json);
     final space = Space.fromJson(json);
     space.setId(documentRef.documentID);
 

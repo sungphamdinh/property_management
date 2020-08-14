@@ -8,7 +8,7 @@ class SpaceItem extends StatelessWidget {
   final double price;
   final String featureImageUrl;
   SpaceItem(
-      this.id, this.title, this.address, this.price, this.featureImageUrl);
+      {this.id, this.title, this.address, this.price, this.featureImageUrl});
 
   @override
   Widget build(BuildContext context) {

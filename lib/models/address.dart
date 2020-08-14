@@ -7,6 +7,8 @@ class Address {
   Address(
       {this.city, this.district, this.ward, this.streetName, this.houseNumber});
 
+  String get readableAddress => "$houseNumber $streetName, $district $city";
+
   factory Address.fromJson(Map<String, dynamic> json) {
     return Address(
         city: json['city'],
