@@ -1,46 +1,60 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:property_management/shared/widgets/corner_radius_text.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class SpaceItem extends StatelessWidget {
-  final String id;
+  final String imageUrl;
   final String title;
   final String address;
   final double price;
-  final String featureImageUrl;
-  SpaceItem(
-      {this.id, this.title, this.address, this.price, this.featureImageUrl});
+
+  SpaceItem({this.title, this.imageUrl, this.address, this.price});
 
   @override
   Widget build(BuildContext context) {
-    final readablePrice = NumberFormat.compact().format(price);
-    return GridTile(
-      header: Container(
-          color: Colors.white,
-          padding: EdgeInsets.all(4),
-          child: Text("$readablePrice VND/Room",
-              style: TextStyle(
-                  fontSize: 10,
-                  color: Theme.of(context).primaryColor,
-                  fontWeight: FontWeight.bold))),
-      child: Image.network(
-        featureImageUrl,
-        fit: BoxFit.cover,
-      ),
-      footer: Container(
-        color: Colors.white,
-        padding: EdgeInsets.all(4),
+    final priceInt = price.round();
+
+    return Card(
+      child: Container(
+        padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16),
         child: Column(
-          children: <Widget>[
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            FadeInImage.memoryNetwork(
+                placeholder: kTransparentImage,
+                image: imageUrl,
+                fit: BoxFit.cover),
+            SizedBox(
+              height: 12,
+            ),
             Text(
               title,
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             SizedBox(
               height: 4,
             ),
             Text(
               address,
-              style: TextStyle(color: Colors.grey, fontSize: 12),
+              style: TextStyle(fontSize: 12, color: Colors.grey),
+            ),
+            SizedBox(
+              height: 12,
+            ),
+            Row(
+              children: [
+                CornerRadiusText(
+                  data: 'Available',
+                  backgroundColor: Colors.green,
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                CornerRadiusText(
+                  data: '$priceInt \$',
+                ),
+              ],
             )
           ],
         ),

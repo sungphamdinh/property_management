@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:property_management/widgets/space_item.dart';
 import 'package:provider/provider.dart';
 
+import '../widgets/space_item.dart';
 import '../providers/spaces.dart';
 import '../screens/add_space_screen.dart';
 import '../widgets/drawer_menu.dart';
-import '../widgets/search_text_box.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -33,15 +32,20 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Home'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {},
+          )
+        ],
       ),
       drawer: DrawerMenu(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           SizedBox(
-            height: 20,
+            height: 8,
           ),
-          SearchTextBox(_onSearchTerm),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
@@ -55,28 +59,29 @@ class _HomeScreenState extends State<HomeScreen> {
                   label: Text('More filters'))
             ],
           ),
-          Expanded(
-            child: Consumer<Spaces>(
-              builder: (ctx, spacesProvider, child) {
-                return Container(
-                    margin: EdgeInsets.symmetric(horizontal: 8),
-                    child: GridView.builder(
-                        itemCount: spacesProvider.spaces.length,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 8,
-                            crossAxisSpacing: 8),
-                        itemBuilder: (ctx, index) {
-                          final space = spacesProvider.spaces[index];
-                          return SpaceItem(
-                              id: space.id,
-                              title: space.postTitle,
-                              address: space.address.readableAddress,
-                              price: space.price,
-                              featureImageUrl: space.imageUrls[0]);
-                        }));
-              },
-            ),
+          Consumer<Spaces>(
+            builder: (ctx, spacesProvider, child) {
+              return Container(
+                  height: 330,
+                  margin: EdgeInsets.symmetric(horizontal: 8),
+                  child: GridView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: spacesProvider.spaces.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          childAspectRatio: 3 / 2.8,
+                          crossAxisCount: 1,
+                          mainAxisSpacing: 8,
+                          crossAxisSpacing: 8),
+                      itemBuilder: (ctx, index) {
+                        final space = spacesProvider.spaces[index];
+                        return SpaceItem(
+                          title: space.postTitle,
+                          address: space.address.readableAddress,
+                          imageUrl: space.imageUrls[0],
+                          price: space.price,
+                        );
+                      }));
+            },
           )
         ],
       ),
