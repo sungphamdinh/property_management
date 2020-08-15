@@ -46,7 +46,7 @@ class ImagesAndUtilitiesState extends State<ImagesAndUtilities> {
   void _pickImage(ImageSource source) async {
     final imagePicker = ImagePicker();
     final imageFile =
-        await imagePicker.getImage(source: source, imageQuality: 80);
+        await imagePicker.getImage(source: source, imageQuality: 50);
     if (imageFile != null) {
       final pickedImageFile = File(imageFile.path);
       setState(() {

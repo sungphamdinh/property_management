@@ -7,14 +7,29 @@ import '../screens/add_space_screen.dart';
 import '../widgets/drawer_menu.dart';
 import '../widgets/search_text_box.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  bool _isFirsTimeOpen = true;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_isFirsTimeOpen) {
+      Provider.of<Spaces>(context).getPlaces();
+      _isFirsTimeOpen = false;
+    }
+  }
+
   void _onSearchTerm(value) {
     print(value);
   }
 
   @override
   Widget build(BuildContext context) {
-    final spaces = Provider.of<Spaces>(context).spaces;
     return Scaffold(
       appBar: AppBar(
         title: Text('Home'),
@@ -41,23 +56,27 @@ class HomeScreen extends StatelessWidget {
             ],
           ),
           Expanded(
-            child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 8),
-                child: GridView.builder(
-                    itemCount: spaces.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 8,
-                        crossAxisSpacing: 8),
-                    itemBuilder: (ctx, index) {
-                      final space = spaces[index];
-                      return SpaceItem(
-                          id: space.id,
-                          title: space.postTitle,
-                          address: space.address.readableAddress,
-                          price: space.price,
-                          featureImageUrl: space.imageUrls[0]);
-                    })),
+            child: Consumer<Spaces>(
+              builder: (ctx, spacesProvider, child) {
+                return Container(
+                    margin: EdgeInsets.symmetric(horizontal: 8),
+                    child: GridView.builder(
+                        itemCount: spacesProvider.spaces.length,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 8,
+                            crossAxisSpacing: 8),
+                        itemBuilder: (ctx, index) {
+                          final space = spacesProvider.spaces[index];
+                          return SpaceItem(
+                              id: space.id,
+                              title: space.postTitle,
+                              address: space.address.readableAddress,
+                              price: space.price,
+                              featureImageUrl: space.imageUrls[0]);
+                        }));
+              },
+            ),
           )
         ],
       ),

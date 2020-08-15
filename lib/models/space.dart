@@ -53,6 +53,10 @@ class Space {
     return RoomTypeMaps[roomType];
   }
 
+  static List<String> _getImages(List<dynamic> json) {
+    return json.map((e) => e.toString()).toList();
+  }
+
   factory Space.fromJson(Map<String, dynamic> json) {
     return Space(
         roomType: Helper.encodeEnum(
@@ -68,7 +72,7 @@ class Space {
         description: json['description'],
         address: Address.fromJson(json['address']),
         owner: Owner.fromJson(json['owner']),
-        imageUrls: json['imageUrls']);
+        imageUrls: _getImages(json['imageUrls']));
   }
   Map<String, dynamic> toJson() {
     return {

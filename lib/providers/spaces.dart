@@ -6,6 +6,8 @@ import 'package:flutter/foundation.dart';
 import '../models/space.dart';
 import 'package:path/path.dart' as path;
 
+import '../models/space.dart';
+
 class Spaces with ChangeNotifier {
   final _fireStore = Firestore.instance;
   static const spacesCollection = 'spaces';
@@ -16,9 +18,10 @@ class Spaces with ChangeNotifier {
   Future<void> getPlaces() async {
     final snapshots =
         await _fireStore.collection(spacesCollection).getDocuments();
-    snapshots.documents.map((document) {
-      print(document['id']);
+    snapshots.documents.forEach((document) {
+      _spaces.add(Space.fromJson(document.data));
     });
+    notifyListeners();
   }
 
   Future<void> createNewSpace(Map<String, dynamic> json) async {
