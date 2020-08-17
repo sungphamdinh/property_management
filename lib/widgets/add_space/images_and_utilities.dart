@@ -18,11 +18,11 @@ class ImagesAndUtilitiesState extends State<ImagesAndUtilities> {
 
   // TODO: should get this data from static resource like json file?
   final _utilities = [
-    Utility('Private WC', Icons.wc),
-    Utility('Parking', Icons.local_parking),
-    Utility('Internet', Icons.wifi),
-    Utility('Security', Icons.security),
-    Utility('Window', Icons.desktop_windows),
+    Utility(name: 'Private WC', iconCodePoint: Icons.wc.codePoint),
+    Utility(name: 'Parking', iconCodePoint: Icons.local_parking.codePoint),
+    Utility(name: 'Internet', iconCodePoint: Icons.wifi.codePoint),
+    Utility(name: 'Security', iconCodePoint: Icons.security.codePoint),
+    Utility(name: 'Window', iconCodePoint: Icons.desktop_windows.codePoint),
   ];
   final _errors = {'imagesError': ''};
 
@@ -149,7 +149,8 @@ class ImagesAndUtilitiesState extends State<ImagesAndUtilities> {
                 crossAxisSpacing: 8,
                 childAspectRatio: 3 / 1),
             itemBuilder: (ctx, index) {
-              return UtilityItem(_utilities[index].name, _utilities[index].icon,
+              return UtilityItem(
+                  _utilities[index].name, _utilities[index].iconCodePoint,
                   (isSelected) {
                 _utilities[index].setSelection(isSelected);
               });
