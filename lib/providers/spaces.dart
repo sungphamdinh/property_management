@@ -6,8 +6,6 @@ import 'package:flutter/foundation.dart';
 import '../models/space.dart';
 import 'package:path/path.dart' as path;
 
-import '../models/space.dart';
-
 class Spaces with ChangeNotifier {
   final _fireStore = Firestore.instance;
   static const spacesCollection = 'spaces';

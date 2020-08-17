@@ -23,10 +23,6 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  void _onSearchTerm(value) {
-    print(value);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,14 +60,9 @@ class _HomeScreenState extends State<HomeScreen> {
               return Container(
                   height: 330,
                   margin: EdgeInsets.symmetric(horizontal: 8),
-                  child: GridView.builder(
+                  child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: spacesProvider.spaces.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          childAspectRatio: 3 / 2.8,
-                          crossAxisCount: 1,
-                          mainAxisSpacing: 8,
-                          crossAxisSpacing: 8),
                       itemBuilder: (ctx, index) {
                         final space = spacesProvider.spaces[index];
                         return SpaceItem(

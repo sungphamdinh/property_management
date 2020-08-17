@@ -16,6 +16,7 @@ class SpaceItem extends StatelessWidget {
 
     return Card(
       child: Container(
+        width: MediaQuery.of(context).size.width - 100,
         padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
