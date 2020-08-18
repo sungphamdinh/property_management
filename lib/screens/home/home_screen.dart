@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:property_management/constants.dart';
 import 'package:property_management/screens/home/widgets/search_box_input.dart';
 import 'package:property_management/screens/home/widgets/space_item.dart';
+import 'package:property_management/screens/home/widgets/space_item_vertical.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -71,6 +72,29 @@ class HomeScreen extends StatelessWidget {
                       );
                     },
                     itemCount: 6,
+                  ),
+                ),
+                SizedBox(
+                  height: kDefaultMargin * 2,
+                ),
+                Text("Top Pick's",
+                    style: TextStyle(
+                        fontSize: kDefaultMediumFontSize,
+                        fontWeight: FontWeight.bold)),
+                SizedBox(
+                  height: kDefaultMargin,
+                ),
+                Container(
+                  height: 100 * 8.0,
+                  child: ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (ctx, index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: SpaceItemVertical(),
+                      );
+                    },
+                    itemCount: 8,
                   ),
                 )
               ],
