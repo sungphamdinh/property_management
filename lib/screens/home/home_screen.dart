@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:property_management/constants.dart';
 import 'package:property_management/screens/home/widgets/search_box_input.dart';
+import 'package:property_management/screens/home/widgets/space_item.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -8,7 +10,7 @@ class HomeScreen extends StatelessWidget {
       backgroundColor: Colors.grey[100],
       body: SafeArea(
         child: Container(
-          margin: EdgeInsets.all(20),
+          margin: EdgeInsets.all(kDefaultMargin),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -23,25 +25,29 @@ class HomeScreen extends StatelessWidget {
                           style: TextStyle(color: Colors.lightBlue))
                     ])),
                 SizedBox(
-                  height: 8,
+                  height: kDefaultMargin,
                 ),
                 Text(
                   "Want to find great place to live?",
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      fontSize: kDefaultSupperLargeFontSize,
+                      fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
-                  height: 20,
+                  height: kDefaultMargin,
                 ),
                 SearchBoxInput(),
                 SizedBox(
-                  height: 20,
+                  height: kDefaultMargin,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       "Recommendation",
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(
+                          fontSize: kDefaultMediumFontSize,
+                          fontWeight: FontWeight.bold),
                     ),
                     FlatButton(
                       child: Text("View all"),
@@ -49,6 +55,23 @@ class HomeScreen extends StatelessWidget {
                       onPressed: () {},
                     )
                   ],
+                ),
+                SizedBox(
+                  height: kDefaultMargin,
+                ),
+                Container(
+                  height: MediaQuery.of(context).size.height / 3.7,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (ctx, index) {
+                      return Padding(
+                        padding:
+                            const EdgeInsets.only(right: kDefaultPadding / 2),
+                        child: SpaceItem(),
+                      );
+                    },
+                    itemCount: 6,
+                  ),
                 )
               ],
             ),
