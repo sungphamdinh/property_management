@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:property_management/screens/home/home_screen.dart';
 import 'package:provider/provider.dart';
 
 import './screens/flash_screen.dart';
@@ -7,7 +8,6 @@ import './providers/auth.dart';
 import './providers/spaces.dart';
 import './screens/add_space_screen.dart';
 import './screens/auth_screen.dart';
-import './screens/home_screen.dart';
 
 void main() => runApp(MyApp());
 
