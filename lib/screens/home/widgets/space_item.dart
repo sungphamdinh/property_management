@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:property_management/constants.dart';
 import 'star.dart';
 
-const kImageUrl =
-    'https://firebasestorage.googleapis.com/v0/b/flutter-chat-27d8e.appspot.com/o/user_images%2Fimage_picker_67893CF2-3999-4C87-8C12-89F49EB36760-37688-00001C6910C936AA.jpg.jpg?alt=media&token=6361d226-0d21-4571-af21-18bfcbdb9905';
-
 class SpaceItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

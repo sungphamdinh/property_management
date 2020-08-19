@@ -3,7 +3,8 @@ import 'package:property_management/constants.dart';
 
 class Star extends StatelessWidget {
   final double starNum;
-  Star({this.starNum});
+  final double textSize;
+  Star({this.starNum, this.textSize});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,9 @@ class Star extends StatelessWidget {
         ),
         Text(
           '$starNum',
-          style: TextStyle(color: Colors.grey),
+          style: TextStyle(
+              color: Colors.grey,
+              fontSize: this.textSize ?? kDefaultMediumFontSize),
         )
       ],
     );
