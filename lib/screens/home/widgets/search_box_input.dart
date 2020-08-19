@@ -9,7 +9,7 @@ class _SearchBoxInputState extends State<SearchBoxInput> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 60,
+      height: 50,
       padding: EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),

@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
             if (userSnapshot.connectionState == ConnectionState.waiting)
               return FlashScreen();
             if (userSnapshot.hasData) {
-              return SpaceDetailScreen();
+              return HomeScreen();
             } else {
               return AuthScreen();
             }

@@ -4,11 +4,20 @@ import 'package:property_management/screens/home/widgets/search_box_input.dart';
 import 'package:property_management/screens/home/widgets/space_item.dart';
 import 'package:property_management/screens/home/widgets/space_item_vertical.dart';
 
+import '../add_space_screen.dart';
+
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[100],
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).primaryColor,
+        child: Icon(Icons.add),
+        onPressed: () {
+          Navigator.of(context).pushNamed(AddSpaceScreen.routeName);
+        },
+      ),
       body: SafeArea(
         child: Container(
           margin: EdgeInsets.all(kDefaultMargin),
