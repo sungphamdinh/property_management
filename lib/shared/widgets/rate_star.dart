@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:property_management/constants.dart';
 
-class Star extends StatelessWidget {
+class RateStar extends StatelessWidget {
   final double starNum;
   final double textSize;
-  Star({this.starNum, this.textSize});
+  RateStar({this.starNum, this.textSize});
 
   @override
   Widget build(BuildContext context) {

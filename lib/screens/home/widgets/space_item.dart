@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:property_management/constants.dart';
 import 'package:property_management/shared/widgets/loading_network_image.dart';
-import 'star.dart';
+import '../../../shared/widgets/rate_star.dart';
 
 class SpaceItem extends StatelessWidget {
   final String id;
@@ -31,7 +31,7 @@ class SpaceItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: MediaQuery.of(context).size.height / 5.8,
+              height: MediaQuery.of(context).size.height / 5.2,
               clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
               child: Hero(
@@ -56,12 +56,19 @@ class SpaceItem extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "\$${this.spacePricePerMonth.toInt()}/month",
-                  style: TextStyle(
-                      color: Colors.lightBlue, fontWeight: FontWeight.bold),
-                ),
-                Star(
+                RichText(
+                    text: TextSpan(
+                        text: "\$${this.spacePricePerMonth.toInt()}",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.black),
+                        children: [
+                      TextSpan(
+                          text: " per month",
+                          style: TextStyle(
+                              color: kTextLightColor,
+                              fontWeight: FontWeight.normal))
+                    ])),
+                RateStar(
                   starNum: 4.8,
                 )
               ],

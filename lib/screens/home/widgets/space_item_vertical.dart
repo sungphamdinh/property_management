@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:property_management/shared/widgets/loading_network_image.dart';
 import '../../../constants.dart';
-import 'star.dart';
+import '../../../shared/widgets/rate_star.dart';
 
 class SpaceItemVertical extends StatelessWidget {
   static const rowHeight = 130.0;
@@ -45,7 +45,7 @@ class SpaceItemVertical extends StatelessWidget {
                       style: TextStyle(
                           color: Colors.lightBlue, fontWeight: FontWeight.bold),
                     ),
-                    Star(starNum: 4)
+                    RateStar(starNum: 4)
                   ],
                 )
               ],

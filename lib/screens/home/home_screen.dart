@@ -49,11 +49,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: kDefaultMargin,
                 ),
                 Text(
-                  "Want to find great place to live?",
+                  "Want to find",
                   style: TextStyle(
                       fontSize: kDefaultSupperLargeFontSize,
                       fontWeight: FontWeight.bold),
                 ),
+                Text("a great place to live?",
+                    style: TextStyle(
+                        fontSize: kDefaultSupperLargeFontSize,
+                        fontWeight: FontWeight.bold)),
                 SizedBox(
                   height: kDefaultMargin,
                 ),
@@ -118,26 +122,26 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: kDefaultMargin * 2,
                 ),
-                Text("Top Pick's",
-                    style: TextStyle(
-                        fontSize: kDefaultMediumFontSize,
-                        fontWeight: FontWeight.bold)),
-                SizedBox(
-                  height: kDefaultMargin,
-                ),
-                Container(
-                  height: SpaceItemVertical.rowHeight * 3.0,
-                  child: ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (ctx, index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0),
-                        child: SpaceItemVertical(),
-                      );
-                    },
-                    itemCount: 3,
-                  ),
-                )
+//                Text("Top Pick's",
+//                    style: TextStyle(
+//                        fontSize: kDefaultMediumFontSize,
+//                        fontWeight: FontWeight.bold)),
+//                SizedBox(
+//                  height: kDefaultMargin,
+//                ),
+//                Container(
+//                  height: SpaceItemVertical.rowHeight * 3.0,
+//                  child: ListView.builder(
+//                    physics: NeverScrollableScrollPhysics(),
+//                    itemBuilder: (ctx, index) {
+//                      return Padding(
+//                        padding: const EdgeInsets.only(bottom: 8.0),
+//                        child: SpaceItemVertical(),
+//                      );
+//                    },
+//                    itemCount: 3,
+//                  ),
+//                )
               ],
             ),
           ),
