@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:property_management/screens/home/home_screen.dart';
 import 'package:property_management/screens/space_detail/space_detail.dart';
+import 'package:property_management/theme.dart';
 import 'package:provider/provider.dart';
 
 import './screens/flash_screen.dart';
@@ -23,19 +24,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
-        theme: ThemeData(
-            primarySwatch: Colors.pink,
-            accentColor: Colors.deepPurple,
-            backgroundColor: Colors.pink,
-            accentColorBrightness: Brightness.dark,
-            appBarTheme: Theme.of(context)
-                .appBarTheme
-                .copyWith(brightness: Brightness.light),
-            buttonTheme: ButtonTheme.of(context).copyWith(
-                buttonColor: Colors.pink,
-                textTheme: ButtonTextTheme.primary,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)))),
+        theme: appTheme(context),
         home: StreamBuilder(
           stream: FirebaseAuth.instance.onAuthStateChanged,
           builder: (ctx, userSnapshot) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:property_management/constants.dart';
+import 'package:property_management/shared/widgets/loading_network_image.dart';
 import 'star.dart';
 
 class SpaceItem extends StatelessWidget {
@@ -14,11 +15,11 @@ class SpaceItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
+            height: MediaQuery.of(context).size.height / 5.8,
             clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
-            child: Image.network(
-              kImageUrl,
-              fit: BoxFit.cover,
+            child: LoadingNetworkImage(
+              url: kImageUrl,
             ),
           ),
           SizedBox(
