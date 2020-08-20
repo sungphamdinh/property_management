@@ -91,6 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           padding:
                               const EdgeInsets.only(right: kDefaultPadding / 2),
                           child: SpaceItem(
+                            id: space.id,
                             spaceName: space.postTitle,
                             spacePricePerMonth: space.price,
                             spaceStart: 4.5,

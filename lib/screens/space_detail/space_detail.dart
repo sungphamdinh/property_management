@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:property_management/providers/spaces.dart';
 import 'package:property_management/screens/home/widgets/star.dart';
+import 'package:property_management/shared/widgets/loading_network_image.dart';
 import 'package:provider/provider.dart';
 import '../../constants.dart';
 
@@ -31,9 +32,11 @@ class SpaceDetailScreen extends StatelessWidget {
                   clipBehavior: Clip.hardEdge,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(kDefaultPadding / 2)),
-                  child: Image.network(
-                    kImageUrl,
-                    fit: BoxFit.cover,
+                  child: Hero(
+                    tag: spaceId,
+                    child: LoadingNetworkImage(
+                      url: kImageUrl,
+                    ),
                   ),
                 ),
                 SizedBox(

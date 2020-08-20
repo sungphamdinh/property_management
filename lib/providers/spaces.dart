@@ -26,6 +26,8 @@ class Spaces with ChangeNotifier {
         await _fireStore.collection(spacesCollection).getDocuments();
     snapshots.documents.forEach((document) {
       final space = Space.fromJson(document.data);
+      space.setId(document.documentID);
+
       if (_isValidSpace(space)) {
         _spaces.add(space);
       }

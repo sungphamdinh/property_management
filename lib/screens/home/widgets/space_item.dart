@@ -4,12 +4,14 @@ import 'package:property_management/shared/widgets/loading_network_image.dart';
 import 'star.dart';
 
 class SpaceItem extends StatelessWidget {
+  final String id;
   final String spaceName;
   final double spacePricePerMonth;
   final double spaceStart;
   final Function onItemPressed;
   SpaceItem(
-      {@required this.spaceName,
+      {@required this.id,
+      @required this.spaceName,
       @required this.spacePricePerMonth,
       @required this.spaceStart,
       this.onItemPressed});
@@ -30,8 +32,11 @@ class SpaceItem extends StatelessWidget {
               height: MediaQuery.of(context).size.height / 5.8,
               clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
-              child: LoadingNetworkImage(
-                url: kImageUrl,
+              child: Hero(
+                tag: id,
+                child: LoadingNetworkImage(
+                  url: kImageUrl,
+                ),
               ),
             ),
             SizedBox(
