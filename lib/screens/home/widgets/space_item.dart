@@ -6,12 +6,14 @@ import 'star.dart';
 class SpaceItem extends StatelessWidget {
   final String id;
   final String spaceName;
+  final String spaceImageUrl;
   final double spacePricePerMonth;
   final double spaceStart;
   final Function onItemPressed;
   SpaceItem(
       {@required this.id,
       @required this.spaceName,
+      @required this.spaceImageUrl,
       @required this.spacePricePerMonth,
       @required this.spaceStart,
       this.onItemPressed});
@@ -35,7 +37,7 @@ class SpaceItem extends StatelessWidget {
               child: Hero(
                 tag: id,
                 child: LoadingNetworkImage(
-                  url: kImageUrl,
+                  url: this.spaceImageUrl,
                 ),
               ),
             ),

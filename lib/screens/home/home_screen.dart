@@ -100,6 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: SpaceItem(
                             id: space.id,
                             spaceName: space.postTitle,
+                            spaceImageUrl: space.imageUrls.first,
                             spacePricePerMonth: space.price,
                             spaceStart: 4.5,
                             onItemPressed: () {
@@ -125,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: kDefaultMargin,
                 ),
                 Container(
-                  height: 100 * 8.0,
+                  height: SpaceItemVertical.rowHeight * 3.0,
                   child: ListView.builder(
                     physics: NeverScrollableScrollPhysics(),
                     itemBuilder: (ctx, index) {
@@ -134,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: SpaceItemVertical(),
                       );
                     },
-                    itemCount: 8,
+                    itemCount: 3,
                   ),
                 )
               ],

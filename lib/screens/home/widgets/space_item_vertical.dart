@@ -4,6 +4,8 @@ import '../../../constants.dart';
 import 'star.dart';
 
 class SpaceItemVertical extends StatelessWidget {
+  static const rowHeight = 130.0;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -18,7 +20,7 @@ class SpaceItemVertical extends StatelessWidget {
             clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(8.0)),
             child: LoadingNetworkImage(
-              url: kImageUrl,
+              url: "http://via.placeholder.com/350x150",
             ),
           ),
           SizedBox(
