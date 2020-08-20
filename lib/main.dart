@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import './screens/flash_screen.dart';
 import './providers/auth.dart';
 import './providers/spaces.dart';
-import './screens/add_space_screen.dart';
+import 'screens/add_space/add_space_screen.dart';
 import './screens/auth_screen.dart';
 
 void main() => runApp(MyApp());

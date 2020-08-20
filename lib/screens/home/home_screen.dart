@@ -7,7 +7,7 @@ import 'package:property_management/screens/home/widgets/space_item_vertical.dar
 import 'package:property_management/screens/space_detail/space_detail.dart';
 import 'package:provider/provider.dart';
 
-import '../add_space_screen.dart';
+import '../add_space/add_space_screen.dart';
 import './widgets/header.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -81,6 +81,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: kDefaultMargin,
                 ),
                 Consumer<Spaces>(builder: (ctx, spacesProvider, child) {
+                  if (spacesProvider.spaces.length == 0)
+                    return Center(
+                      child: Text(
+                        "No spaces available!",
+                        style: TextStyle(fontSize: kDefaultMediumFontSize),
+                      ),
+                    );
                   return Container(
                     height: MediaQuery.of(context).size.height / 3.4,
                     child: ListView.builder(

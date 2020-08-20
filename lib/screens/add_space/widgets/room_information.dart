@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../models/space.dart';
-import '../../shared/validation.dart';
+import 'package:property_management/models/space.dart';
+import 'package:property_management/shared/validation.dart';
 
 class RoomInformation extends StatefulWidget {
   RoomInformation({Key key}) : super(key: key);
@@ -198,7 +197,7 @@ class RoomInformationState extends State<RoomInformation> {
                       try {
                         _formData['electricityCost'] = double.parse(value);
                       } catch (_) {
-                        _formData['electricityCost'] = 0;
+                        _formData['electricityCost'] = 0.0;
                       }
                     },
                   ),
@@ -235,7 +234,7 @@ class RoomInformationState extends State<RoomInformation> {
                       try {
                         _formData['waterCost'] = double.parse(value);
                       } catch (_) {
-                        _formData['waterCost'] = 0;
+                        _formData['waterCost'] = 0.0;
                       }
                     },
                   ),

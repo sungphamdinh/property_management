@@ -1,10 +1,11 @@
 import 'dart:io';
 
-import '../../models/utility.dart';
-import '../../widgets/add_space//image_item.dart';
-import '../../widgets/add_space/utility_item.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:property_management/models/utility.dart';
+import 'package:property_management/screens/add_space/widgets/utility_item.dart';
+
+import 'image_item.dart';
 
 class ImagesAndUtilities extends StatefulWidget {
   ImagesAndUtilities({Key key}) : super(key: key);
@@ -34,9 +35,9 @@ class ImagesAndUtilitiesState extends State<ImagesAndUtilities> {
   }
 
   bool _validateData() {
-    if (_pickedImages.length < 2) {
+    if (_pickedImages.length < 4) {
       setState(() {
-        _errors['imagesError'] = 'Please add at least 2 room images';
+        _errors['imagesError'] = 'Please add at least 4 room images';
       });
       return false;
     }

@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:property_management/providers/spaces.dart';
 import 'package:property_management/screens/home/widgets/star.dart';
@@ -13,6 +14,18 @@ class SpaceDetailScreen extends StatelessWidget {
     final spaceId = ModalRoute.of(context).settings.arguments;
     final space = Provider.of<Spaces>(context).spaceWithId(spaceId);
 
+    List<Widget> imageWidgets() {
+      if (space == null || space.imageUrls.length == 0) return [];
+      return space.imageUrls.map((imageUrl) {
+        return Container(
+          height: MediaQuery.of(context).size.height / 4,
+          child: LoadingNetworkImage(
+            url: imageUrl,
+          ),
+        );
+      }).toList();
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Space detail"),
@@ -26,17 +39,12 @@ class SpaceDetailScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  height: MediaQuery.of(context).size.height / 4,
-                  width: double.infinity,
-                  clipBehavior: Clip.hardEdge,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(kDefaultPadding / 2)),
-                  child: Hero(
-                    tag: spaceId,
-                    child: LoadingNetworkImage(
-                      url: kImageUrl,
-                    ),
+                Hero(
+                  tag: spaceId,
+                  child: CarouselSlider(
+                    items: imageWidgets(),
+                    options: CarouselOptions(
+                        initialPage: 0, enlargeCenterPage: true),
                   ),
                 ),
                 SizedBox(

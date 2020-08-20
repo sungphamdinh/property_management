@@ -4,10 +4,10 @@ import 'package:property_management/providers/auth.dart';
 import 'package:property_management/providers/spaces.dart';
 import 'package:provider/provider.dart';
 
-import '../widgets/add_space/confirmation.dart';
-import '../widgets/add_space/add_address.dart';
-import '../widgets/add_space/images_and_utilities.dart';
-import '../widgets/add_space/room_information.dart';
+import './widgets/confirmation.dart';
+import './widgets/add_address.dart';
+import './widgets/images_and_utilities.dart';
+import './widgets/room_information.dart';
 
 enum AddSpaceSteps {
   roomInformation,
