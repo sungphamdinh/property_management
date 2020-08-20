@@ -5,7 +5,8 @@ import 'package:property_management/shared/widgets/loading_network_image.dart';
 
 class CarouselWithIndicator extends StatefulWidget {
   final List<String> imageUrls;
-  CarouselWithIndicator({this.imageUrls});
+  final String id;
+  CarouselWithIndicator({this.imageUrls, this.id});
 
   @override
   _CarouselWithIndicatorState createState() => _CarouselWithIndicatorState();
@@ -27,17 +28,20 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        CarouselSlider(
-          items: imageWidgets(),
-          options: CarouselOptions(
-              height: 220,
-              initialPage: 0,
-              enlargeCenterPage: true,
-              onPageChanged: (index, reason) {
-                setState(() {
-                  _current = index;
-                });
-              }),
+        Hero(
+          tag: widget.id,
+          child: CarouselSlider(
+            items: imageWidgets(),
+            options: CarouselOptions(
+                height: 220,
+                initialPage: 0,
+                enlargeCenterPage: true,
+                onPageChanged: (index, reason) {
+                  setState(() {
+                    _current = index;
+                  });
+                }),
+          ),
         ),
         SizedBox(
           height: kDefaultMargin,

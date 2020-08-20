@@ -31,10 +31,7 @@ class SpaceDetailScreen extends StatelessWidget {
               SizedBox(
                 height: kDefaultMargin,
               ),
-              Hero(
-                tag: spaceId,
-                child: CarouselWithIndicator(imageUrls: space.imageUrls),
-              ),
+              CarouselWithIndicator(imageUrls: space.imageUrls, id: spaceId),
               SizedBox(
                 height: kDefaultMargin,
               ),
