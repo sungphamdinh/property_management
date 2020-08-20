@@ -4,6 +4,14 @@ import 'package:property_management/shared/widgets/loading_network_image.dart';
 import 'star.dart';
 
 class SpaceItem extends StatelessWidget {
+  final String spaceName;
+  final double spacePricePerMonth;
+  final double spaceStart;
+  SpaceItem(
+      {@required this.spaceName,
+      @required this.spacePricePerMonth,
+      @required this.spaceStart});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,7 +34,7 @@ class SpaceItem extends StatelessWidget {
             height: kDefaultMargin / 2,
           ),
           Text(
-            "Kaputih Corworking",
+            this.spaceName,
             style: TextStyle(
                 fontSize: kDefaultMediumFontSize, fontWeight: FontWeight.bold),
           ),
@@ -37,7 +45,7 @@ class SpaceItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "\$2000/month",
+                "\$${this.spacePricePerMonth.toInt()}/month",
                 style: TextStyle(
                     color: Colors.lightBlue, fontWeight: FontWeight.bold),
               ),

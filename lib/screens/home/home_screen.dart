@@ -1,12 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:property_management/constants.dart';
+import 'package:property_management/providers/spaces.dart';
 import 'package:property_management/screens/home/widgets/search_box_input.dart';
 import 'package:property_management/screens/home/widgets/space_item.dart';
 import 'package:property_management/screens/home/widgets/space_item_vertical.dart';
+import 'package:provider/provider.dart';
 
 import '../add_space_screen.dart';
+import './widgets/header.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  bool isFirstOpen = true;
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (isFirstOpen) {
+      this.isFirstOpen = false;
+      Provider.of<Spaces>(context).getPlaces();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,15 +43,7 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                RichText(
-                    text: TextSpan(
-                        text: 'Hello, ',
-                        style: TextStyle(color: Colors.black),
-                        children: [
-                      TextSpan(
-                          text: 'Sung Pham',
-                          style: TextStyle(color: Colors.lightBlue))
-                    ])),
+                Header(),
                 SizedBox(
                   height: kDefaultMargin,
                 ),
@@ -69,20 +79,27 @@ class HomeScreen extends StatelessWidget {
                 SizedBox(
                   height: kDefaultMargin,
                 ),
-                Container(
-                  height: MediaQuery.of(context).size.height / 3.7,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (ctx, index) {
-                      return Padding(
-                        padding:
-                            const EdgeInsets.only(right: kDefaultPadding / 2),
-                        child: SpaceItem(),
-                      );
-                    },
-                    itemCount: 6,
-                  ),
-                ),
+                Consumer<Spaces>(builder: (ctx, spacesProvider, child) {
+                  return Container(
+                    height: MediaQuery.of(context).size.height / 3.4,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (ctx, index) {
+                        final space = spacesProvider.spaces[index];
+                        return Padding(
+                          padding:
+                              const EdgeInsets.only(right: kDefaultPadding / 2),
+                          child: SpaceItem(
+                            spaceName: space.postTitle,
+                            spacePricePerMonth: space.price,
+                            spaceStart: 4.5,
+                          ),
+                        );
+                      },
+                      itemCount: spacesProvider.spaces.length,
+                    ),
+                  );
+                }),
                 SizedBox(
                   height: kDefaultMargin * 2,
                 ),

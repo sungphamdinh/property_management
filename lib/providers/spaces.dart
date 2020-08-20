@@ -13,11 +13,18 @@ class Spaces with ChangeNotifier {
   List<Space> _spaces = [];
   List<Space> get spaces => [..._spaces];
 
+  bool _isValidSpace(Space space) {
+    return space.postTitle.trim().isNotEmpty;
+  }
+
   Future<void> getPlaces() async {
     final snapshots =
         await _fireStore.collection(spacesCollection).getDocuments();
     snapshots.documents.forEach((document) {
-      _spaces.add(Space.fromJson(document.data));
+      final space = Space.fromJson(document.data);
+      if (_isValidSpace(space)) {
+        _spaces.add(space);
+      }
     });
     notifyListeners();
   }
