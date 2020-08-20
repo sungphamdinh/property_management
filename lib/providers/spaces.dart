@@ -17,6 +17,10 @@ class Spaces with ChangeNotifier {
     return space.postTitle.trim().isNotEmpty;
   }
 
+  Space spaceWithId(String id) {
+    return _spaces.firstWhere((space) => space.id == id);
+  }
+
   Future<void> getPlaces() async {
     final snapshots =
         await _fireStore.collection(spacesCollection).getDocuments();

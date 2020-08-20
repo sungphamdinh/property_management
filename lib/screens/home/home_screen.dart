@@ -4,6 +4,7 @@ import 'package:property_management/providers/spaces.dart';
 import 'package:property_management/screens/home/widgets/search_box_input.dart';
 import 'package:property_management/screens/home/widgets/space_item.dart';
 import 'package:property_management/screens/home/widgets/space_item_vertical.dart';
+import 'package:property_management/screens/space_detail/space_detail.dart';
 import 'package:provider/provider.dart';
 
 import '../add_space_screen.dart';
@@ -93,6 +94,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             spaceName: space.postTitle,
                             spacePricePerMonth: space.price,
                             spaceStart: 4.5,
+                            onItemPressed: () {
+                              Navigator.of(context).pushNamed(
+                                  SpaceDetailScreen.routeName,
+                                  arguments: space.id);
+                            },
                           ),
                         );
                       },

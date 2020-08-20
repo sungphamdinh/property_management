@@ -37,7 +37,10 @@ class MyApp extends StatelessWidget {
             }
           },
         ),
-        routes: {AddSpaceScreen.routeName: (ctx) => AddSpaceScreen()},
+        routes: {
+          AddSpaceScreen.routeName: (ctx) => AddSpaceScreen(),
+          SpaceDetailScreen.routeName: (ctx) => SpaceDetailScreen()
+        },
       ),
     );
   }
