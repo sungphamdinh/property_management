@@ -35,7 +35,7 @@ class SpaceItemVertical extends StatelessWidget {
                         fontSize: kDefaultMediumFontSize,
                         fontWeight: FontWeight.bold)),
                 SizedBox(
-                  height: kDefaultMargin,
+                  height: kDefaultMargin / 2,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

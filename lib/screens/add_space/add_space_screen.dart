@@ -150,7 +150,6 @@ class _AddSpaceScreenState extends State<AddSpaceScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.grey[100],
         title: Text("Create new space"),
         textTheme: Theme.of(context)
             .textTheme

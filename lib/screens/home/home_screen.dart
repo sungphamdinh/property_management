@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:property_management/constants.dart';
 import 'package:property_management/providers/spaces.dart';
-import 'package:property_management/screens/home/widgets/search_box_input.dart';
+import 'package:property_management/screens/search_places/seach_places_screen.dart';
+import 'package:property_management/shared/widgets/search_box_input.dart';
 import 'package:property_management/screens/home/widgets/space_item.dart';
 import 'package:property_management/screens/home/widgets/space_item_vertical.dart';
 import 'package:property_management/screens/space_detail/space_detail.dart';
@@ -29,15 +30,18 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).primaryColor,
-        child: Icon(Icons.add),
-        onPressed: () {
-          Navigator.of(context).pushNamed(AddSpaceScreen.routeName);
-        },
+      floatingActionButton: Container(
+        margin: EdgeInsets.only(bottom: 60),
+        child: FloatingActionButton(
+          backgroundColor: Theme.of(context).primaryColor,
+          child: Icon(Icons.add),
+          onPressed: () {
+            Navigator.of(context).pushNamed(AddSpaceScreen.routeName);
+          },
+        ),
       ),
       body: SafeArea(
+        bottom: false,
         child: Container(
           margin: EdgeInsets.all(kDefaultMargin),
           child: SingleChildScrollView(
@@ -61,7 +65,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: kDefaultMargin,
                 ),
-                SearchBoxInput(),
+                SearchBoxInput(
+                  onTab: () {
+                    Navigator.of(context)
+                        .pushNamed(SearchPlacesScreen.routeName);
+                  },
+                ),
                 SizedBox(
                   height: kDefaultMargin,
                 ),
@@ -100,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         final space = spacesProvider.spaces[index];
                         return Padding(
                           padding:
-                              const EdgeInsets.only(right: kDefaultPadding / 2),
+                              const EdgeInsets.only(right: kDefaultPadding - 8),
                           child: SpaceItem(
                             id: space.id,
                             spaceName: space.postTitle,
@@ -122,26 +131,26 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: kDefaultMargin * 2,
                 ),
-//                Text("Top Pick's",
-//                    style: TextStyle(
-//                        fontSize: kDefaultMediumFontSize,
-//                        fontWeight: FontWeight.bold)),
-//                SizedBox(
-//                  height: kDefaultMargin,
-//                ),
-//                Container(
-//                  height: SpaceItemVertical.rowHeight * 3.0,
-//                  child: ListView.builder(
-//                    physics: NeverScrollableScrollPhysics(),
-//                    itemBuilder: (ctx, index) {
-//                      return Padding(
-//                        padding: const EdgeInsets.only(bottom: 8.0),
-//                        child: SpaceItemVertical(),
-//                      );
-//                    },
-//                    itemCount: 3,
-//                  ),
-//                )
+                Text("Top Pick's",
+                    style: TextStyle(
+                        fontSize: kDefaultMediumFontSize,
+                        fontWeight: FontWeight.bold)),
+                SizedBox(
+                  height: kDefaultMargin,
+                ),
+                Container(
+                  height: SpaceItemVertical.rowHeight * 3.0,
+                  child: ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (ctx, index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: SpaceItemVertical(),
+                      );
+                    },
+                    itemCount: 3,
+                  ),
+                )
               ],
             ),
           ),

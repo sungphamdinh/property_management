@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:property_management/screens/home/home_screen.dart';
+import 'package:property_management/screens/main_screen.dart';
+import 'package:property_management/screens/sanbox.dart';
+import 'package:property_management/screens/search_places/seach_places_screen.dart';
 import 'package:property_management/screens/space_detail/space_detail.dart';
 import 'package:property_management/theme.dart';
 import 'package:provider/provider.dart';
@@ -31,7 +34,8 @@ class MyApp extends StatelessWidget {
             if (userSnapshot.connectionState == ConnectionState.waiting)
               return FlashScreen();
             if (userSnapshot.hasData) {
-              return HomeScreen();
+              return MainScreen();
+//              return SandboxScreen();
             } else {
               return AuthScreen();
             }
@@ -39,7 +43,8 @@ class MyApp extends StatelessWidget {
         ),
         routes: {
           AddSpaceScreen.routeName: (ctx) => AddSpaceScreen(),
-          SpaceDetailScreen.routeName: (ctx) => SpaceDetailScreen()
+          SpaceDetailScreen.routeName: (ctx) => SpaceDetailScreen(),
+          SearchPlacesScreen.routeName: (ctx) => SearchPlacesScreen()
         },
       ),
     );

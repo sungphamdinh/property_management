@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../widgets/space_item.dart';
-import '../providers/spaces.dart';
-import 'add_space/add_space_screen.dart';
-import '../widgets/drawer_menu.dart';
+import '../../widgets/space_item.dart';
+import '../../providers/spaces.dart';
+import '../add_space/add_space_screen.dart';
+import '../../widgets/drawer_menu.dart';
 
 class HomeScreen extends StatefulWidget {
   @override

@@ -11,4 +11,7 @@ const kDefaultSupperLargeFontSize = 28.0;
 
 const kDefaultTextColor = Colors.white;
 const kPrimaryColor = Colors.pink;
+const kAccentColor = Colors.blue;
 const kTextLightColor = Colors.grey;
+
+final kBackgroundColor = Colors.grey[200];

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
+import 'constants.dart';
+
 ThemeData appTheme(BuildContext context) {
   return ThemeData(
-      primarySwatch: Colors.pink,
-      accentColor: Colors.pink,
-      backgroundColor: Colors.pink,
+      primarySwatch: kPrimaryColor,
+      accentColor: kAccentColor,
+      backgroundColor: kBackgroundColor,
       accentColorBrightness: Brightness.dark,
       appBarTheme:
           Theme.of(context).appBarTheme.copyWith(brightness: Brightness.light),
