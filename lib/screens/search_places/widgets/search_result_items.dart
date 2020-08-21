@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:property_management/models/space.dart';
+import 'package:property_management/screens/space_detail/space_detail.dart';
 
 class SearchResultItems extends StatelessWidget {
-  final Function(String item) onPressed;
-  final List<String> data;
-  SearchResultItems({this.data, this.onPressed});
+  final List<Space> data;
+  SearchResultItems({this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -12,11 +13,13 @@ class SearchResultItems extends StatelessWidget {
       height: this.data.length * 5.0,
       child: ListView.builder(
         itemBuilder: (ctx, index) {
+          final space = this.data[index];
           return ListTile(
-            title: Text("Nguyen Van Qua"),
-            subtitle: Text("Quan 12, Ho Chi Minh"),
+            title: Text(space.postTitle),
+            subtitle: Text(space.address.readableAddress),
             onTap: () {
-              this.onPressed(this.data[index]);
+              Navigator.of(context)
+                  .pushNamed(SpaceDetailScreen.routeName, arguments: space.id);
             },
           );
         },

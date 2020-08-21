@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:property_management/models/space.dart';
+import 'package:property_management/providers/spaces.dart';
 import 'package:property_management/screens/search_places/widgets/search_history.dart';
 import 'package:property_management/screens/search_places/widgets/search_result_items.dart';
 import 'package:property_management/shared/widgets/search_box_input.dart';
+import 'package:provider/provider.dart';
 
 import '../../constants.dart';
 
@@ -27,19 +30,16 @@ class _SearchPlacesScreenState extends State<SearchPlacesScreen> {
           margin: EdgeInsets.symmetric(horizontal: kDefaultMargin),
           child: Column(
             children: [
+              SizedBox(
+                height: kDefaultMargin,
+              ),
               topHeader(_searchTerm),
               SizedBox(
                 height: kDefaultMargin * 1.4,
               ),
               Container(
                 child: SearchHistory(
-                  keywords: [
-                    "Quan 22",
-                    "Quan 5",
-                    "Tan Binh",
-                    "Nguyen Van Qua",
-                    "Phan Huy Ich"
-                  ],
+                  keywords: [],
                   onPressed: (item) {
                     setState(() {
                       _searchTerm = item;
@@ -61,21 +61,21 @@ class _SearchPlacesScreenState extends State<SearchPlacesScreen> {
                           IconButton(
                             icon: Icon(Icons.delete),
                             color: Colors.red,
-                            onPressed: () {},
+                            onPressed: () {
+                              Provider.of<Spaces>(context, listen: false)
+                                  .clearSearchResult();
+                            },
                           )
                         ],
                       ),
-                      Expanded(
-                        child: SearchResultItems(
-                          data: [
-                            "1",
-                            "2",
-                            "1",
-                          ],
-                          onPressed: (item) {
-                            print(item);
-                          },
-                        ),
+                      Consumer<Spaces>(
+                        builder: (ctx, spacesProvider, child) {
+                          return Expanded(
+                            child: SearchResultItems(
+                              data: spacesProvider.searchResults,
+                            ),
+                          );
+                        },
                       )
                     ],
                   ),
@@ -96,7 +96,10 @@ class _SearchPlacesScreenState extends State<SearchPlacesScreen> {
           child: SearchBoxInput(
             value: initialTerm,
             onValueChange: (value) {
-              print(value);
+              if (value.length > 2) {
+                Provider.of<Spaces>(context, listen: false)
+                    .searchByKeyword(value);
+              }
             },
           ),
         ),

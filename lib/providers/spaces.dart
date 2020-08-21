@@ -11,7 +11,9 @@ class Spaces with ChangeNotifier {
   static const spacesCollection = 'spaces';
 
   List<Space> _spaces = [];
+  List<Space> _searchResults = [];
   List<Space> get spaces => [..._spaces];
+  List<Space> get searchResults => [..._searchResults];
 
   bool _isValidSpace(Space space) {
     return space.postTitle.trim().isNotEmpty;
@@ -32,6 +34,19 @@ class Spaces with ChangeNotifier {
         _spaces.add(space);
       }
     });
+    notifyListeners();
+  }
+
+  void searchByKeyword(String keyTerm) {
+    _searchResults = _spaces
+        .where((space) =>
+            space.postTitle.toLowerCase().contains(keyTerm.toLowerCase()))
+        .toList();
+    notifyListeners();
+  }
+
+  void clearSearchResult() {
+    _searchResults.clear();
     notifyListeners();
   }
 

@@ -10,7 +10,7 @@ class SearchHistory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 30,
+      height: keywords.length == 0 ? 0 : 30,
       child: ListView.builder(
         itemBuilder: (ctx, index) {
           return GestureDetector(
