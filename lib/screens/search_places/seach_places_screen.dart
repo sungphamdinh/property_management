@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:property_management/models/space.dart';
+import 'package:property_management/providers/history_keywords.dart';
 import 'package:property_management/providers/spaces.dart';
 import 'package:property_management/screens/search_places/widgets/search_history.dart';
 import 'package:property_management/screens/search_places/widgets/search_result_items.dart';
@@ -17,9 +17,11 @@ class SearchPlacesScreen extends StatefulWidget {
 
 class _SearchPlacesScreenState extends State<SearchPlacesScreen> {
   static const cancelBtnWidth = 130;
-  String _searchTerm = "";
 
-  void onSearchText(String value) {}
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,21 +31,23 @@ class _SearchPlacesScreenState extends State<SearchPlacesScreen> {
         child: Container(
           margin: EdgeInsets.symmetric(horizontal: kDefaultMargin),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
                 height: kDefaultMargin,
               ),
-              topHeader(_searchTerm),
+              topHeader(),
               SizedBox(
                 height: kDefaultMargin * 1.4,
               ),
+              Text("History Search"),
+              SizedBox(
+                height: kDefaultMargin,
+              ),
               Container(
                 child: SearchHistory(
-                  keywords: [],
                   onPressed: (item) {
-                    setState(() {
-                      _searchTerm = item;
-                    });
+                    print(item);
                   },
                 ),
               ),
@@ -88,17 +92,24 @@ class _SearchPlacesScreenState extends State<SearchPlacesScreen> {
     );
   }
 
-  Widget topHeader(String initialTerm) {
+  Widget topHeader() {
     return Row(
       children: [
         Container(
           width: MediaQuery.of(context).size.width - cancelBtnWidth,
           child: SearchBoxInput(
-            value: initialTerm,
+            onSubmitted: (value) {
+              if (value.isNotEmpty && value.length > 2) {
+                Provider.of<HistoryKeywords>(context, listen: false)
+                    .addKeyword(value);
+              }
+            },
             onValueChange: (value) {
               if (value.length > 2) {
                 Provider.of<Spaces>(context, listen: false)
                     .searchByKeyword(value);
+              } else {
+                Provider.of<Spaces>(context, listen: false).clearSearchResult();
               }
             },
           ),

@@ -40,7 +40,10 @@ class Spaces with ChangeNotifier {
   void searchByKeyword(String keyTerm) {
     _searchResults = _spaces
         .where((space) =>
-            space.postTitle.toLowerCase().contains(keyTerm.toLowerCase()))
+            space.postTitle.toLowerCase().contains(keyTerm.toLowerCase()) ||
+            space.address.readableAddress
+                .toLowerCase()
+                .contains(keyTerm.toLowerCase()))
         .toList();
     notifyListeners();
   }

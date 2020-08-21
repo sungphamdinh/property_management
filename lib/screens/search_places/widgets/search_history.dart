@@ -1,39 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:property_management/constants.dart';
+import 'package:property_management/providers/history_keywords.dart';
+import 'package:property_management/screens/search_places/widgets/history_keyword_item.dart';
+import 'package:provider/provider.dart';
 
 class SearchHistory extends StatelessWidget {
-  final List<String> keywords;
   final Function(String item) onPressed;
 
-  SearchHistory({this.keywords, this.onPressed});
+  SearchHistory({this.onPressed});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: keywords.length == 0 ? 0 : 30,
-      child: ListView.builder(
-        itemBuilder: (ctx, index) {
-          return GestureDetector(
-            onTap: () {
-              this.onPressed(this.keywords[index]);
-            },
-            child: Container(
-              padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-              margin: EdgeInsets.symmetric(horizontal: kDefaultMargin / 3),
-              decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(10)),
-              child: Center(
-                child: Text(
-                  this.keywords[index],
-                  style: TextStyle(color: Colors.red),
-                ),
-              ),
-            ),
+    return FutureBuilder<List<String>>(
+      future: Provider.of<HistoryKeywords>(context).getKeywords(),
+      builder: (ctx, keywordsSnapshot) {
+        if (keywordsSnapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: CircularProgressIndicator(),
           );
-        },
-        itemCount: this.keywords.length,
-        scrollDirection: Axis.horizontal,
-      ),
+        } else {
+          final keywords = keywordsSnapshot.data;
+          if (keywords.length != 0) {
+            return Container(
+              height: keywords.length == 0 ? 0 : 30,
+              child: ListView.builder(
+                itemBuilder: (ctx, index) {
+                  return HistoryKeywordItem(
+                      keyword: keywords[index], onPressed: this.onPressed);
+                },
+                itemCount: keywords.length,
+                scrollDirection: Axis.horizontal,
+              ),
+            );
+          } else {
+            return Center(
+              child: Text("No search history"),
+            );
+          }
+        }
+      },
     );
   }
 }
