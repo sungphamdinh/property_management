@@ -16,10 +16,6 @@ class SpaceDetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Place detail"),
-        textTheme: Theme.of(context)
-            .textTheme
-            .copyWith(headline4: TextStyle(color: Colors.black)),
-        iconTheme: Theme.of(context).iconTheme.copyWith(color: Colors.black),
       ),
       backgroundColor: Colors.grey[100],
       body: SafeArea(

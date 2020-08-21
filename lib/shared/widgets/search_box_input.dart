@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class SearchBoxInput extends StatefulWidget {
+  final String value;
   final Function onTab;
   final Function(String value) onValueChange;
-  SearchBoxInput({this.onTab, this.onValueChange});
+  SearchBoxInput({this.onTab, this.onValueChange, this.value});
 
   @override
   _SearchBoxInputState createState() => _SearchBoxInputState();
@@ -25,6 +26,7 @@ class _SearchBoxInputState extends State<SearchBoxInput> {
           child: IgnorePointer(
             ignoring: widget.onTab == null ? false : true,
             child: TextField(
+              controller: TextEditingController(text: widget.value),
               onChanged: (value) {
                 widget?.onValueChange(value);
               },
