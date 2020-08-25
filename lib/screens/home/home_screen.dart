@@ -3,13 +3,11 @@ import 'package:property_management/constants.dart';
 import 'package:property_management/providers/spaces.dart';
 import 'package:property_management/screens/search_places/seach_places_screen.dart';
 import 'package:property_management/shared/widgets/search_box_input.dart';
-import 'package:property_management/screens/home/widgets/space_item.dart';
-import 'package:property_management/screens/home/widgets/space_item_vertical.dart';
 import 'package:property_management/screens/space_detail/space_detail.dart';
 import 'package:provider/provider.dart';
 
 import '../add_space/add_space_screen.dart';
-import './widgets/header.dart';
+import './widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
   @override

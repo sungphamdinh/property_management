@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:property_management/providers/history_keywords.dart';
-import 'package:property_management/providers/spaces.dart';
-import 'package:property_management/screens/search_places/widgets/search_history.dart';
-import 'package:property_management/screens/search_places/widgets/search_result_items.dart';
-import 'package:property_management/shared/widgets/search_box_input.dart';
 import 'package:provider/provider.dart';
 
+import './widgets/widgets.dart';
 import '../../constants.dart';
+import '../../providers/providers.dart';
+import '../../shared/widgets/search_box_input.dart';
 
 class SearchPlacesScreen extends StatefulWidget {
   static const routeName = "/search-places";

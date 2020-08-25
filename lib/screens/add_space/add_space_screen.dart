@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:property_management/models/space.dart';
-import 'package:property_management/providers/auth.dart';
-import 'package:property_management/providers/spaces.dart';
 import 'package:provider/provider.dart';
 
-import './widgets/confirmation.dart';
-import './widgets/add_address.dart';
-import './widgets/images_and_utilities.dart';
-import './widgets/room_information.dart';
+import '../../providers/providers.dart';
+import './widgets/widgets.dart';
 
 enum AddSpaceSteps {
   roomInformation,

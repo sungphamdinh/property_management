@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/auth.dart';
+import '../providers/providers.dart';
 import '../widgets/auth_form.dart';
 
 class AuthScreen extends StatefulWidget {
