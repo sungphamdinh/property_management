@@ -1,12 +1,10 @@
 import 'dart:io';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:property_management/repositories/auth_repository.dart';
 
 class Auth with ChangeNotifier {
-  final _auth = FirebaseAuth.instance;
+  final AuthRepository repository;
 
   String _userId;
   bool _isLoading = false;
@@ -14,21 +12,18 @@ class Auth with ChangeNotifier {
   bool get isLoading => _isLoading;
   String get userId => _userId;
 
+  Auth({this.repository});
+
   Future<void> loginWithUser(String email, String password) async {
     _isLoading = true;
     try {
-      final authResult = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
-      _userId = authResult.user.uid;
+      _userId = await this.repository.signInWithUser(email, password);
       _isLoading = false;
       notifyListeners();
     } on PlatformException catch (error) {
       _isLoading = false;
       notifyListeners();
       throw error;
-    } catch (otherError) {
-      _isLoading = false;
-      notifyListeners();
     }
   }
 
@@ -36,15 +31,7 @@ class Auth with ChangeNotifier {
       String email, String password, String username, File image) async {
     _isLoading = true;
     try {
-      AuthResult authResult = await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      final imageUrl = await _uploadAvatarImage(authResult, image);
-
-      await Firestore.instance
-          .collection('users')
-          .document(authResult.user.uid)
-          .setData(
-              {'username': username, 'email': email, 'avatar_url': imageUrl});
+      await this.repository.signUpWithUser(email, username, password, image);
       _isLoading = false;
       notifyListeners();
     } catch (error) {
@@ -52,15 +39,5 @@ class Auth with ChangeNotifier {
       notifyListeners();
       throw error;
     }
-  }
-
-  Future<String> _uploadAvatarImage(AuthResult authResult, File image) async {
-    final ref = FirebaseStorage.instance
-        .ref()
-        .child('user_images')
-        .child(authResult.user.uid + '.jpg');
-    await ref.putFile(image).onComplete;
-    final url = await ref.getDownloadURL();
-    return url;
   }
 }
