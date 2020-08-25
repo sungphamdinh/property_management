@@ -10,17 +10,19 @@ import './screens/screens.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  final authRepository = AuthFireBase();
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider.value(value: Auth(repository: AuthFireBase())),
+        ChangeNotifierProvider.value(value: Auth(repository: authRepository)),
         ChangeNotifierProvider.value(
             value: Spaces(repository: SpacesFirebaseStorage())),
         ChangeNotifierProxyProvider<Auth, Users>(
           update: (ctx, auth, users) => Users(
               repository: UsersFirebaseStorage(),
-              authRepository: AuthFireBase()),
+              authRepository: authRepository),
         )
       ],
       child: MaterialApp(
