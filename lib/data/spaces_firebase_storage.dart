@@ -8,14 +8,14 @@ import 'package:property_management/repositories/spaces_repository.dart';
 
 class SpacesFirebaseStorage implements SpacesRepository {
   final _fireStore = Firestore.instance;
-  static const spacesCollection = 'spaces';
+  static const COLLECTION_KEY = 'spaces';
 
   @override
   Future<List<Space>> getSpaces() async {
     List<Space> spaces = [];
 
     final snapshots =
-        await _fireStore.collection(spacesCollection).getDocuments();
+        await _fireStore.collection(COLLECTION_KEY).getDocuments();
     snapshots.documents.forEach((document) {
       final space = Space.fromJson(document.data);
       space.setId(document.documentID);
@@ -41,7 +41,7 @@ class SpacesFirebaseStorage implements SpacesRepository {
     json.remove('pickedUtilities');
     json.putIfAbsent('imageUrls', () => imageUrls);
 
-    final documentRef = await _fireStore.collection(spacesCollection).add(json);
+    final documentRef = await _fireStore.collection(COLLECTION_KEY).add(json);
     final space = Space.fromJson(json);
     space.setId(documentRef.documentID);
 

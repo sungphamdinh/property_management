@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:property_management/data/auth_firebase.dart';
-import 'package:property_management/data/spaces_firsebase_storage.dart';
+import 'package:property_management/data/spaces_firebase_storage.dart';
 import 'package:property_management/providers/history_keywords.dart';
 import 'package:property_management/screens/all_spaces/all_spaces_screen.dart';
 import 'package:property_management/screens/main_screen.dart';

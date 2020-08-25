@@ -1,8 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:property_management/constants.dart';
+import 'package:property_management/data/users_firebase_storage.dart';
+import 'package:property_management/repositories/users_repository.dart';
 import 'package:property_management/screens/messages/widgets/friend_row.dart';
 
-class MessageScreen extends StatelessWidget {
+class MessageScreen extends StatefulWidget {
+  @override
+  _MessageScreenState createState() => _MessageScreenState();
+}
+
+class _MessageScreenState extends State<MessageScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
