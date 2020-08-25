@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:property_management/screens/account_screen.dart';
 import 'package:property_management/screens/home/home_screen.dart';
 import 'package:property_management/screens/messages/messages_screen.dart';
 
@@ -31,7 +32,7 @@ class MainScreen extends StatelessWidget {
           case Tabs.MessagesTab:
             return MessageScreen();
           default:
-            return comingSoonPage();
+            return AccountScreen();
         }
       },
     );

@@ -13,5 +13,6 @@ const kDefaultTextColor = Colors.white;
 const kPrimaryColor = Colors.pink;
 const kAccentColor = Colors.blue;
 const kTextLightColor = Colors.grey;
+const kTextColor = Colors.black;
 
 final kBackgroundColor = Colors.grey[200];

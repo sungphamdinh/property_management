@@ -3,6 +3,19 @@ import 'package:flutter/material.dart';
 import '../../../constants.dart';
 
 class FriendRow extends StatelessWidget {
+  final String avatarUrl;
+  final String displayName;
+  final String lastMessage;
+  final String lastMessageCreatedTime;
+
+  const FriendRow(
+      {Key key,
+      this.avatarUrl,
+      this.displayName,
+      this.lastMessage,
+      this.lastMessageCreatedTime})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -12,8 +25,8 @@ class FriendRow extends StatelessWidget {
       child: Row(
         children: [
           CircleAvatar(
-            backgroundImage: NetworkImage(
-                "https://robohash.org/49b6ec4860811f433382b47123d7e1d7?set=set4&bgset=&size=400x400"),
+            minRadius: 30,
+            backgroundImage: NetworkImage(this.avatarUrl),
           ),
           SizedBox(
             width: kDefaultMargin,
@@ -21,17 +34,26 @@ class FriendRow extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Sung Pham"),
+              Text(
+                this.displayName,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
               SizedBox(
                 height: kDefaultMargin / 2,
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Last messages"),
+                  Text(
+                    this.lastMessage,
+                    style: TextStyle(color: kTextLightColor),
+                  ),
                   SizedBox(
                     width: kDefaultMargin / 3,
                   ),
-                  Text("30 min ago")
+                  Text(this.lastMessageCreatedTime,
+                      style: TextStyle(
+                          color: kTextColor, fontSize: kDefaultSmallFontSize))
                 ],
               )
             ],
