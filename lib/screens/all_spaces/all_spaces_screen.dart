@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:property_management/constants.dart';
 import 'package:property_management/providers/providers.dart';
 import 'package:property_management/screens/all_spaces/widgets/space_item_vertical.dart';
-import 'package:property_management/screens/space_detail/space_detail.dart';
+import 'package:property_management/screens/space_detail/space_detail_screen.dart';
 import 'package:provider/provider.dart';
 
-class AllSpaces extends StatelessWidget {
+class AllSpacesScreen extends StatelessWidget {
   static const routeName = "/all-spaces";
 
   @override

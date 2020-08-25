@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:property_management/providers/spaces.dart';
 import 'package:property_management/screens/space_detail/widgets/carousel_with_indicator.dart';
+import 'package:property_management/shared/widgets/button_back.dart';
 import 'package:property_management/shared/widgets/rate_star.dart';
 import 'package:provider/provider.dart';
 import '../../constants.dart';
@@ -14,15 +15,12 @@ class SpaceDetailScreen extends StatelessWidget {
     final space = Provider.of<Spaces>(context).spaceWithId(spaceId);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Place detail"),
-      ),
-      backgroundColor: Colors.grey[100],
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              ButtonBack(),
               SizedBox(
                 height: kDefaultMargin,
               ),

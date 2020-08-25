@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:property_management/constants.dart';
 import 'package:property_management/providers/spaces.dart';
-import 'package:property_management/screens/all_spaces/all_spaces.dart';
+import 'package:property_management/screens/all_spaces/all_spaces_screen.dart';
 import 'package:property_management/screens/search_places/seach_places_screen.dart';
 import 'package:property_management/shared/widgets/search_box_input.dart';
-import 'package:property_management/screens/space_detail/space_detail.dart';
+import 'package:property_management/screens/space_detail/space_detail_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../add_space/add_space_screen.dart';
@@ -82,7 +82,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Text("View all"),
                       textColor: Colors.blue,
                       onPressed: () {
-                        Navigator.of(context).pushNamed(AllSpaces.routeName);
+                        Navigator.of(context)
+                            .pushNamed(AllSpacesScreen.routeName);
                       },
                     )
                   ],

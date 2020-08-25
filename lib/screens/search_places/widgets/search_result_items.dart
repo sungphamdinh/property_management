@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:property_management/models/space.dart';
-import 'package:property_management/screens/space_detail/space_detail.dart';
+import 'package:property_management/screens/space_detail/space_detail_screen.dart';
 
 class SearchResultItems extends StatelessWidget {
   final List<Space> data;
