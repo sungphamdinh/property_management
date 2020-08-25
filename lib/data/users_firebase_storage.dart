@@ -12,4 +12,15 @@ class UsersFirebaseStorage implements UsersRepository {
         await _fireStore.collection(COLLECTION_KEY).document(userId).get();
     return User.fromJson(userSnapshot.data);
   }
+
+  @override
+  Future<List<User>> getFriends(String userId) async {
+    List<User> friends = [];
+    final user = await userWithId(userId);
+    await Future.forEach(user.friends, (item) async {
+      final friend = await userWithId(item);
+      friends.add(friend);
+    });
+    return friends;
+  }
 }

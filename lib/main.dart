@@ -1,21 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:property_management/data/auth_firebase.dart';
-import 'package:property_management/data/spaces_firebase_storage.dart';
-import 'package:property_management/providers/history_keywords.dart';
-import 'package:property_management/screens/all_spaces/all_spaces_screen.dart';
-import 'package:property_management/screens/main_screen.dart';
-import 'package:property_management/screens/search_places/seach_places_screen.dart';
-import 'package:property_management/screens/space_detail/space_detail_screen.dart';
-import 'package:property_management/data/keywords_pref_storage.dart';
 import 'package:property_management/theme.dart';
 import 'package:provider/provider.dart';
 
-import './screens/flash_screen.dart';
-import './providers/auth.dart';
-import './providers/spaces.dart';
-import 'screens/add_space/add_space_screen.dart';
-import './screens/auth_screen.dart';
+import './data/data.dart';
+import './providers/providers.dart';
+import './screens/screens.dart';
 
 void main() => runApp(MyApp());
 
@@ -26,7 +16,12 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider.value(value: Auth(repository: AuthFireBase())),
         ChangeNotifierProvider.value(
-            value: Spaces(repository: SpacesFirebaseStorage()))
+            value: Spaces(repository: SpacesFirebaseStorage())),
+        ChangeNotifierProxyProvider<Auth, Users>(
+          update: (ctx, auth, users) => Users(
+              repository: UsersFirebaseStorage(),
+              authRepository: AuthFireBase()),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

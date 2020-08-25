@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:property_management/constants.dart';
-import 'package:property_management/data/users_firebase_storage.dart';
-import 'package:property_management/repositories/users_repository.dart';
+import 'package:property_management/models/user.dart';
+import 'package:property_management/providers/providers.dart';
 import 'package:property_management/screens/messages/widgets/friend_row.dart';
+import 'package:provider/provider.dart';
 
 class MessageScreen extends StatefulWidget {
   @override
@@ -10,9 +11,12 @@ class MessageScreen extends StatefulWidget {
 }
 
 class _MessageScreenState extends State<MessageScreen> {
+  Future<List<User>> getFriendFuture;
+
   @override
   void initState() {
     super.initState();
+    getFriendFuture = Provider.of<Users>(context, listen: false).getFriends();
   }
 
   @override
@@ -41,17 +45,35 @@ class _MessageScreenState extends State<MessageScreen> {
           Expanded(
             child: Container(
               margin: EdgeInsets.symmetric(horizontal: kDefaultMargin),
-              child: ListView.builder(
-                itemBuilder: (ctx, index) {
-                  return FriendRow(
-                    avatarUrl:
-                        "https://gravatar.com/avatar/09b4ca6df47be2bc5da3b843b0859ad0?s=400&d=robohash&r=x",
-                    displayName: "Sung Pham Dinh",
-                    lastMessage: "Remmember Me",
-                    lastMessageCreatedTime: "1 hour ago",
-                  );
+              child: FutureBuilder<List<User>>(
+                future: getFriendFuture,
+                builder: (ctx, friendsSnapshot) {
+                  if (friendsSnapshot.connectionState ==
+                      ConnectionState.waiting) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else {
+                    final friends = friendsSnapshot.data;
+                    if (friends != null) {
+                      return ListView.builder(
+                        itemBuilder: (ctx, index) {
+                          return FriendRow(
+                            avatarUrl: friends[index].avatarUrl,
+                            displayName: friends[index].username,
+                            lastMessage: "Remmember Me",
+                            lastMessageCreatedTime: "1 hour ago",
+                          );
+                        },
+                        itemCount: friends.length,
+                      );
+                    } else {
+                      return Center(
+                        child: Text("No friends"),
+                      );
+                    }
+                  }
                 },
-                itemCount: 10,
               ),
             ),
           )

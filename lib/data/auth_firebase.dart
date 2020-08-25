@@ -48,4 +48,10 @@ class AuthFireBase implements AuthRepository {
     final url = await ref.getDownloadURL();
     return url;
   }
+
+  @override
+  Future<String> getCurrentUserId() async {
+    final user = await _auth.currentUser();
+    return user.uid;
+  }
 }
