@@ -1,46 +1,28 @@
 import 'package:flutter/foundation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:property_management/repositories/keywords_repository.dart';
 
 class HistoryKeywords with ChangeNotifier {
-  static const key = "keywords";
+  final KeywordsRepository repository;
 
   List<String> _keywords = [];
   List<String> get keywords => [..._keywords];
 
-  Future<List<String>> getKeywords() async {
-    final prefs = await SharedPreferences.getInstance();
-    final storageKeywords = prefs.getStringList(key);
-    if (storageKeywords != null) {
-      _keywords = storageKeywords;
-    }
-    return _keywords;
-  }
+  HistoryKeywords({@required this.repository});
 
-  Future<void> addKeyword(String keyword) async {
-    final prefs = await SharedPreferences.getInstance();
-    final isExist = _isExistKeyword(keyword);
-
-    if (!isExist && _isNotExceedLimit(prefs)) {
-      _keywords.add(keyword);
-      await prefs.setStringList(key, [..._keywords]);
-      notifyListeners();
-    }
-  }
-
-  Future<void> removeKeyword(String keyword) async {
-    final prefs = await SharedPreferences.getInstance();
-
-    _keywords.remove(keyword);
-    await prefs.setStringList(key, [..._keywords]);
-
+  Future<void> getKeywords() async {
+    _keywords = await this.repository.getKeywords();
     notifyListeners();
   }
 
-  bool _isExistKeyword(String keyword) {
-    return _keywords.contains(keyword);
+  Future<void> addKeyword(String keyword) async {
+    await this.repository.addKeyword(keyword);
+    _keywords.add(keyword);
+    notifyListeners();
   }
 
-  bool _isNotExceedLimit(SharedPreferences prefs) {
-    return _keywords.length <= 5;
+  Future<void> removeKeyword(String keyword) async {
+    await this.repository.removeKeyword(keyword);
+    _keywords.remove(keyword);
+    notifyListeners();
   }
 }

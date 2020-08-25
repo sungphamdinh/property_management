@@ -11,6 +11,8 @@ class SearchBoxInput extends StatefulWidget {
 }
 
 class _SearchBoxInputState extends State<SearchBoxInput> {
+  final _controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -26,11 +28,13 @@ class _SearchBoxInputState extends State<SearchBoxInput> {
           child: IgnorePointer(
             ignoring: widget.onTab == null ? false : true,
             child: TextField(
+              controller: _controller,
               onChanged: (value) {
                 widget?.onValueChange(value);
               },
               onSubmitted: (value) {
                 widget?.onSubmitted(value);
+                _controller.text = "";
               },
               decoration: InputDecoration(
                   hintText: "Enter search term",

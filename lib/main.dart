@@ -1,11 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:property_management/providers/history_keywords.dart';
-import 'package:property_management/screens/home/home_screen.dart';
 import 'package:property_management/screens/main_screen.dart';
-import 'package:property_management/screens/sanbox.dart';
 import 'package:property_management/screens/search_places/seach_places_screen.dart';
 import 'package:property_management/screens/space_detail/space_detail.dart';
+import 'package:property_management/services/keywords_pref_storage.dart';
 import 'package:property_management/theme.dart';
 import 'package:provider/provider.dart';
 
@@ -46,7 +45,9 @@ class MyApp extends StatelessWidget {
           AddSpaceScreen.routeName: (ctx) => AddSpaceScreen(),
           SpaceDetailScreen.routeName: (ctx) => SpaceDetailScreen(),
           SearchPlacesScreen.routeName: (ctx) => ChangeNotifierProvider(
-              create: (ctx) => HistoryKeywords(), child: SearchPlacesScreen())
+              create: (ctx) =>
+                  HistoryKeywords(repository: KeywordsPrefStorage()),
+              child: SearchPlacesScreen())
         },
       ),
     );

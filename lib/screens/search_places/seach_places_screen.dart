@@ -17,11 +17,6 @@ class _SearchPlacesScreenState extends State<SearchPlacesScreen> {
   static const cancelBtnWidth = 130;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kBackgroundColor,
