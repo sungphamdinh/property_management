@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:property_management/constants.dart';
 import 'package:property_management/providers/spaces.dart';
+import 'package:property_management/screens/all_spaces/all_spaces.dart';
 import 'package:property_management/screens/search_places/seach_places_screen.dart';
 import 'package:property_management/shared/widgets/search_box_input.dart';
 import 'package:property_management/screens/space_detail/space_detail.dart';
@@ -80,7 +81,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     FlatButton(
                       child: Text("View all"),
                       textColor: Colors.blue,
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(AllSpaces.routeName);
+                      },
                     )
                   ],
                 ),
@@ -132,19 +135,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: kDefaultMargin,
                 ),
-                Container(
-                  height: SpaceItemVertical.rowHeight * 3.0,
-                  child: ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (ctx, index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0),
-                        child: SpaceItemVertical(),
-                      );
-                    },
-                    itemCount: 3,
-                  ),
-                )
+//                Container(
+//                  height: SpaceItemVertical.rowHeight * 3.0,
+//                  child: ListView.builder(
+//                    physics: NeverScrollableScrollPhysics(),
+//                    itemBuilder: (ctx, index) {
+//                      return Padding(
+//                        padding: const EdgeInsets.only(bottom: 8.0),
+//                        child: SpaceItemVertical(),
+//                      );
+//                    },
+//                    itemCount: 3,
+//                  ),
+//                )
               ],
             ),
           ),

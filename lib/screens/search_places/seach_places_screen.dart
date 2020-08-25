@@ -40,7 +40,8 @@ class _SearchPlacesScreenState extends State<SearchPlacesScreen> {
               Container(
                 child: SearchHistory(
                   onPressed: (item) {
-                    print(item);
+                    Provider.of<Spaces>(context, listen: false)
+                        .searchByKeyword(item);
                   },
                 ),
               ),

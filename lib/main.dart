@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:property_management/data/spaces_firsebase_storage.dart';
 import 'package:property_management/providers/history_keywords.dart';
+import 'package:property_management/screens/all_spaces/all_spaces.dart';
 import 'package:property_management/screens/main_screen.dart';
 import 'package:property_management/screens/search_places/seach_places_screen.dart';
 import 'package:property_management/screens/space_detail/space_detail.dart';
@@ -48,7 +49,8 @@ class MyApp extends StatelessWidget {
           SearchPlacesScreen.routeName: (ctx) => ChangeNotifierProvider(
               create: (ctx) =>
                   HistoryKeywords(repository: KeywordsPrefStorage()),
-              child: SearchPlacesScreen())
+              child: SearchPlacesScreen()),
+          AllSpaces.routeName: (ctx) => AllSpaces()
         },
       ),
     );
