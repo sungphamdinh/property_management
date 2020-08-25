@@ -111,6 +111,7 @@ class _SearchPlacesScreenState extends State<SearchPlacesScreen> {
           child: Text("Cancel"),
           textColor: Theme.of(context).primaryColor,
           onPressed: () {
+            Provider.of<Spaces>(context, listen: false).clearSearchResult();
             Navigator.of(context).pop();
           },
         )

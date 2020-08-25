@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:property_management/data/spaces_firsebase_storage.dart';
 import 'package:property_management/providers/history_keywords.dart';
 import 'package:property_management/screens/main_screen.dart';
 import 'package:property_management/screens/search_places/seach_places_screen.dart';
@@ -22,7 +23,8 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: Auth()),
-        ChangeNotifierProvider.value(value: Spaces())
+        ChangeNotifierProvider.value(
+            value: Spaces(repository: SpacesFirebaseStorage()))
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
