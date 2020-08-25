@@ -37,12 +37,16 @@ class SpaceDetailScreen extends StatelessWidget {
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
-                          space.postTitle,
-                          style: TextStyle(
-                              fontSize: kDefaultLargeFontSize,
-                              fontWeight: FontWeight.bold),
+                        Container(
+                          width: 250,
+                          child: Text(
+                            space.postTitle,
+                            style: TextStyle(
+                                fontSize: kDefaultLargeFontSize,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                         RateStar(
                           starNum: 4.8,

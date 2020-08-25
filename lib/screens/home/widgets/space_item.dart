@@ -4,6 +4,8 @@ import 'package:property_management/shared/widgets/loading_network_image.dart';
 import '../../../shared/widgets/rate_star.dart';
 
 class SpaceItem extends StatelessWidget {
+  static const rowHeight = 260.0;
+
   final String id;
   final String spaceName;
   final String spaceImageUrl;

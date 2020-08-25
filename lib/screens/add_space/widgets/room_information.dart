@@ -11,7 +11,7 @@ class RoomInformation extends StatefulWidget {
 class RoomInformationState extends State<RoomInformation> {
   bool _isElectricityCostFree = false;
   bool _isWaterCostFree = false;
-  static const double textFieldFormWidth = 250;
+  static const double textFieldFormWidth = 200;
   final _formKey = GlobalKey<FormState>();
   final _formData = {
     'roomType': RoomType.roomForRent,

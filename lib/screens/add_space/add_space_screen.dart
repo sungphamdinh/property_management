@@ -147,10 +147,6 @@ class _AddSpaceScreenState extends State<AddSpaceScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Create new space"),
-        textTheme: Theme.of(context)
-            .textTheme
-            .copyWith(headline4: TextStyle(color: Colors.black)),
-        iconTheme: Theme.of(context).iconTheme.copyWith(color: Colors.black),
       ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),

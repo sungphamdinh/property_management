@@ -15,14 +15,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool isFirstOpen = true;
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (isFirstOpen) {
-      this.isFirstOpen = false;
-      Provider.of<Spaces>(context).getPlaces();
-    }
+  void initState() {
+    super.initState();
+    Provider.of<Spaces>(context, listen: false).getPlaces();
   }
 
   @override
@@ -100,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     );
                   return Container(
-                    height: MediaQuery.of(context).size.height / 3.4,
+                    height: SpaceItem.rowHeight,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (ctx, index) {
