@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
+import 'package:property_management/data/keywords_pref_storage.dart';
 import 'package:property_management/locator.dart';
-import 'package:property_management/repositories/keywords_repository.dart';
 
 class HistoryKeywords with ChangeNotifier {
-  final _repository = getIt.get<KeywordsRepository>();
+  final _repository = getIt.get<KeywordsPrefStorage>();
 
   List<String> _keywords = [];
   List<String> get keywords => [..._keywords];
