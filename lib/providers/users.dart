@@ -22,4 +22,8 @@ class Users extends BaseProvider {
     _friends = await this.userRepository.getFriends(userId);
     setState(ProviderState.Idle);
   }
+
+  User friendWithId(String id) {
+    return _friends.firstWhere((user) => user.id == id);
+  }
 }

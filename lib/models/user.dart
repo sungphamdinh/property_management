@@ -1,3 +1,5 @@
+enum UserStatus { Active, InActive }
+
 class User {
   String id;
   final String avatarUrl;
