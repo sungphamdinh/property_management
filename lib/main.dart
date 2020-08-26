@@ -1,56 +1,55 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:property_management/locator.dart';
 import 'package:property_management/theme.dart';
 import 'package:provider/provider.dart';
 
-import './data/data.dart';
 import './providers/providers.dart';
 import './screens/screens.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  setupDependencyInjection();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
-  final authRepository = AuthFireBase();
-
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider.value(value: Auth(repository: authRepository)),
-        ChangeNotifierProvider.value(
-            value: Spaces(repository: SpacesFirebaseStorage())),
-        ChangeNotifierProxyProvider<Auth, Users>(
-          update: (ctx, auth, users) => Users(
-              repository: UsersFirebaseStorage(),
-              authRepository: authRepository),
-        )
+        ChangeNotifierProvider.value(value: Auth()),
+        ChangeNotifierProvider.value(value: Spaces()),
+        ChangeNotifierProvider.value(value: Users()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: appTheme(context),
-        home: StreamBuilder(
-          stream: FirebaseAuth.instance.onAuthStateChanged,
-          builder: (ctx, userSnapshot) {
-            if (userSnapshot.connectionState == ConnectionState.waiting)
-              return SplashScreen();
-            if (userSnapshot.hasData) {
-              return MainScreen();
-            } else {
-              return AuthScreen();
-            }
-          },
-        ),
+        home: initialWidget(),
         routes: {
           AddSpaceScreen.routeName: (ctx) => AddSpaceScreen(),
           SpaceDetailScreen.routeName: (ctx) => SpaceDetailScreen(),
           SearchPlacesScreen.routeName: (ctx) => ChangeNotifierProvider(
-              create: (ctx) =>
-                  HistoryKeywords(repository: KeywordsPrefStorage()),
+              create: (ctx) => getIt.get<HistoryKeywords>(),
               child: SearchPlacesScreen()),
           AllSpacesScreen.routeName: (ctx) => AllSpacesScreen(),
         },
       ),
+    );
+  }
+
+  Widget initialWidget() {
+    return StreamBuilder(
+      stream: FirebaseAuth.instance.onAuthStateChanged,
+      builder: (ctx, userSnapshot) {
+        if (userSnapshot.connectionState == ConnectionState.waiting)
+          return SplashScreen();
+        if (userSnapshot.hasData) {
+          return MainScreen();
+        } else {
+          return AuthScreen();
+        }
+      },
     );
   }
 }

@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:property_management/data/auth_firebase.dart';
+import 'package:property_management/data/users_firebase_storage.dart';
+import 'package:property_management/locator.dart';
 import 'package:property_management/models/user.dart';
-import 'package:property_management/repositories/auth_repository.dart';
-import 'package:property_management/repositories/users_repository.dart';
 
 class Users with ChangeNotifier {
-  final UsersRepository repository;
-  final AuthRepository authRepository;
-  Users({this.repository, this.authRepository});
+  final userRepository = getIt.get<UsersFirebaseStorage>();
+  final authRepository = getIt.get<AuthFireBase>();
 
   Future<User> getUserWithId(String id) async {
-    final user = await this.repository.userWithId(id);
+    final user = await this.userRepository.userWithId(id);
     return user;
   }
 
   Future<List<User>> getFriends() async {
     final userId = await this.authRepository.getCurrentUserId();
-    final friends = await this.repository.getFriends(userId);
+    final friends = await this.userRepository.getFriends(userId);
     return friends;
   }
 }

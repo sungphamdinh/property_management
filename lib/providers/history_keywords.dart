@@ -1,27 +1,26 @@
 import 'package:flutter/foundation.dart';
+import 'package:property_management/locator.dart';
 import 'package:property_management/repositories/keywords_repository.dart';
 
 class HistoryKeywords with ChangeNotifier {
-  final KeywordsRepository repository;
+  final _repository = getIt.get<KeywordsRepository>();
 
   List<String> _keywords = [];
   List<String> get keywords => [..._keywords];
 
-  HistoryKeywords({@required this.repository});
-
   Future<void> getKeywords() async {
-    _keywords = await this.repository.getKeywords();
+    _keywords = await this._repository.getKeywords();
     notifyListeners();
   }
 
   Future<void> addKeyword(String keyword) async {
-    await this.repository.addKeyword(keyword);
+    await this._repository.addKeyword(keyword);
     _keywords.add(keyword);
     notifyListeners();
   }
 
   Future<void> removeKeyword(String keyword) async {
-    await this.repository.removeKeyword(keyword);
+    await this._repository.removeKeyword(keyword);
     _keywords.remove(keyword);
     notifyListeners();
   }
