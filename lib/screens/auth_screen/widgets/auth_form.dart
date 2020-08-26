@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:property_management/providers/base_provider.dart';
+
 import '../../../providers/auth.dart';
 import '../../../shared/widgets/user_image_picker.dart';
 import 'package:flutter/material.dart';
@@ -116,7 +118,7 @@ class _AuthFormState extends State<AuthForm> {
                   ),
                   Consumer<Auth>(
                     builder: (ctx, auth, child) {
-                      return auth.isLoading
+                      return auth.state == ProviderState.Busy
                           ? Center(
                               child: CircularProgressIndicator(),
                             )

@@ -136,19 +136,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: kDefaultMargin,
                 ),
-//                Container(
-//                  height: SpaceItemVertical.rowHeight * 3.0,
-//                  child: ListView.builder(
-//                    physics: NeverScrollableScrollPhysics(),
-//                    itemBuilder: (ctx, index) {
-//                      return Padding(
-//                        padding: const EdgeInsets.only(bottom: 8.0),
-//                        child: SpaceItemVertical(),
-//                      );
-//                    },
-//                    itemCount: 3,
-//                  ),
-//                )
               ],
             ),
           ),

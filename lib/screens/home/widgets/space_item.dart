@@ -25,7 +25,7 @@ class SpaceItem extends StatelessWidget {
     return GestureDetector(
       onTap: this.onItemPressed,
       child: Container(
-        width: MediaQuery.of(context).size.width / 1.8,
+        width: MediaQuery.of(context).size.width / 1.9,
         padding: EdgeInsets.all(kDefaultPadding - 8),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12), color: Colors.white),
@@ -33,7 +33,7 @@ class SpaceItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: MediaQuery.of(context).size.height / 5.2,
+              height: rowHeight / 1.8,
               clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
               child: Hero(
@@ -46,35 +46,44 @@ class SpaceItem extends StatelessWidget {
             SizedBox(
               height: kDefaultMargin / 2,
             ),
-            Text(
-              this.spaceName,
-              style: TextStyle(
-                  fontSize: kDefaultMediumFontSize,
-                  fontWeight: FontWeight.bold),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    this.spaceName,
+                    style: TextStyle(
+                        fontSize: kDefaultMediumFontSize,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    height: kDefaultMargin / 2,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      RichText(
+                          text: TextSpan(
+                              text: "\$${this.spacePricePerMonth.toInt()}",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
+                              children: [
+                            TextSpan(
+                                text: " per month",
+                                style: TextStyle(
+                                    color: kTextLightColor,
+                                    fontWeight: FontWeight.normal))
+                          ])),
+                      RateStar(
+                        starNum: 4.8,
+                      )
+                    ],
+                  )
+                ],
+              ),
             ),
-            SizedBox(
-              height: kDefaultMargin / 2,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                RichText(
-                    text: TextSpan(
-                        text: "\$${this.spacePricePerMonth.toInt()}",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, color: Colors.black),
-                        children: [
-                      TextSpan(
-                          text: " per month",
-                          style: TextStyle(
-                              color: kTextLightColor,
-                              fontWeight: FontWeight.normal))
-                    ])),
-                RateStar(
-                  starNum: 4.8,
-                )
-              ],
-            )
           ],
         ),
       ),
