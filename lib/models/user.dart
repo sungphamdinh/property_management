@@ -1,10 +1,11 @@
 class User {
+  String id;
   final String avatarUrl;
   final String email;
   final String username;
   final List<String> friends;
 
-  User({this.avatarUrl, this.email, this.username, this.friends});
+  User({this.id, this.avatarUrl, this.email, this.username, this.friends});
 
   static List<String> _friendsListFrom(List<dynamic> items) {
     return items.map((item) => item.toString()).toList();

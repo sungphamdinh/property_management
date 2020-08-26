@@ -15,15 +15,18 @@ class AllSpacesScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: kDefaultMargin,
+            height: kDefaultMargin * 2,
           ),
           Row(
             children: [
-              IconButton(
-                icon: Icon(Icons.arrow_back_ios),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
+              Padding(
+                padding: const EdgeInsets.only(left: kDefaultPadding / 2),
+                child: IconButton(
+                  icon: Icon(Icons.arrow_back_ios),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
               ),
               Spacer(),
               Container(

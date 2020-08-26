@@ -1,9 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:property_management/data/data.dart';
 import 'package:property_management/locator.dart';
+import 'package:property_management/providers/base_provider.dart';
 import '../models/space.dart';
 
-class Spaces with ChangeNotifier {
+class Spaces extends BaseProvider {
   final _spaceRepository = getIt.get<SpacesFirebaseStorage>();
 
   List<Space> _spaces = [];
@@ -13,8 +14,9 @@ class Spaces with ChangeNotifier {
   List<Space> get searchResults => [..._searchResults];
 
   Future<void> getPlaces() async {
+    setState(ProviderState.Busy);
     _spaces = await _spaceRepository.getSpaces();
-    notifyListeners();
+    setState(ProviderState.Idle);
   }
 
   Future<void> createNewSpace(Map<String, dynamic> json) async {

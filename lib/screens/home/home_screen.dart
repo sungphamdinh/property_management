@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:property_management/constants.dart';
+import 'package:property_management/providers/base_provider.dart';
 import 'package:property_management/providers/spaces.dart';
 import 'package:property_management/screens/all_spaces/all_spaces_screen.dart';
 import 'package:property_management/screens/search_places/seach_places_screen.dart';
@@ -19,7 +20,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<Spaces>(context, listen: false).getPlaces();
+    Future.delayed(Duration(milliseconds: 30), () {
+      Provider.of<Spaces>(context, listen: false).getPlaces();
+    });
   }
 
   @override
@@ -92,12 +95,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: kDefaultMargin,
                 ),
                 Consumer<Spaces>(builder: (ctx, spacesProvider, child) {
-                  if (spacesProvider.spaces.length == 0)
+                  if (spacesProvider.state == ProviderState.Busy)
                     return Center(
-                      child: Text(
-                        "No spaces available!",
-                        style: TextStyle(fontSize: kDefaultMediumFontSize),
-                      ),
+                      child: CircularProgressIndicator(),
                     );
                   return Container(
                     height: SpaceItem.rowHeight,

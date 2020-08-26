@@ -19,6 +19,7 @@ class UsersFirebaseStorage implements UsersRepository {
     final user = await userWithId(userId);
     await Future.forEach(user.friends, (item) async {
       final friend = await userWithId(item);
+      friend.id = item;
       friends.add(friend);
     });
     return friends;

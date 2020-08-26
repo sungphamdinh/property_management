@@ -9,3 +9,4 @@ export 'auth/auth_screen.dart';
 export 'account_screen.dart';
 export 'sandbox_screen.dart';
 export 'splash_screen.dart';
+export 'chat/chat_screen.dart';

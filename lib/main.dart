@@ -33,6 +33,7 @@ class MyApp extends StatelessWidget {
               create: (ctx) => getIt.get<HistoryKeywords>(),
               child: SearchPlacesScreen()),
           AllSpacesScreen.routeName: (ctx) => AllSpacesScreen(),
+          ChatScreen.routeName: (ctx) => ChatScreen()
         },
       ),
     );

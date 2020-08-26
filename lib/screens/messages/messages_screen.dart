@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:property_management/constants.dart';
-import 'package:property_management/models/user.dart';
+import 'package:property_management/providers/base_provider.dart';
 import 'package:property_management/providers/providers.dart';
+import 'package:property_management/screens/chat/chat_screen.dart';
 import 'package:property_management/screens/messages/widgets/friend_row.dart';
 import 'package:provider/provider.dart';
 
@@ -11,12 +12,12 @@ class MessageScreen extends StatefulWidget {
 }
 
 class _MessageScreenState extends State<MessageScreen> {
-  Future<List<User>> getFriendFuture;
-
   @override
   void initState() {
     super.initState();
-    getFriendFuture = Provider.of<Users>(context, listen: false).getFriends();
+    Future.delayed(Duration(milliseconds: 30), () {
+      Provider.of<Users>(context, listen: false).getFriends();
+    });
   }
 
   @override
@@ -44,38 +45,42 @@ class _MessageScreenState extends State<MessageScreen> {
           ),
           Expanded(
             child: Container(
-              margin: EdgeInsets.symmetric(horizontal: kDefaultMargin),
-              child: FutureBuilder<List<User>>(
-                future: getFriendFuture,
-                builder: (ctx, friendsSnapshot) {
-                  if (friendsSnapshot.connectionState ==
-                      ConnectionState.waiting) {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else {
-                    final friends = friendsSnapshot.data;
-                    if (friends != null) {
-                      return ListView.builder(
-                        itemBuilder: (ctx, index) {
-                          return FriendRow(
-                            avatarUrl: friends[index].avatarUrl,
-                            displayName: friends[index].username,
-                            lastMessage: "Remmember Me",
-                            lastMessageCreatedTime: "1 hour ago",
-                          );
-                        },
-                        itemCount: friends.length,
+                margin: EdgeInsets.symmetric(horizontal: kDefaultMargin),
+                child: Consumer<Users>(
+                  builder: (ctx, users, child) {
+                    if (users.state == ProviderState.Busy) {
+                      return Center(
+                        child: CircularProgressIndicator(),
                       );
                     } else {
-                      return Center(
-                        child: Text("No friends"),
-                      );
+                      final friends = users.friends;
+                      if (friends != null) {
+                        return ListView.builder(
+                          itemBuilder: (ctx, index) {
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).pushNamed(
+                                    ChatScreen.routeName,
+                                    arguments: friends[index].id);
+                              },
+                              child: FriendRow(
+                                avatarUrl: friends[index].avatarUrl,
+                                displayName: friends[index].username,
+                                lastMessage: "Remmember Me",
+                                lastMessageCreatedTime: "1 hour ago",
+                              ),
+                            );
+                          },
+                          itemCount: friends.length,
+                        );
+                      } else {
+                        return Center(
+                          child: Text("No friends"),
+                        );
+                      }
                     }
-                  }
-                },
-              ),
-            ),
+                  },
+                )),
           )
         ],
       ),

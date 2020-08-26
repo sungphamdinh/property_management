@@ -6,17 +6,20 @@ class AccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        margin: EdgeInsets.all(kDefaultMargin),
-        child: Column(
-          children: [
-            FlatButton.icon(
-                onPressed: () {
-                  FirebaseAuth.instance.signOut();
-                },
-                icon: Icon(Icons.keyboard_return),
-                label: Text("Log Out"))
-          ],
+      body: SafeArea(
+        child: Container(
+          margin: EdgeInsets.all(kDefaultMargin),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              FlatButton.icon(
+                  onPressed: () {
+                    FirebaseAuth.instance.signOut();
+                  },
+                  icon: Icon(Icons.keyboard_return),
+                  label: Text("Log Out"))
+            ],
+          ),
         ),
       ),
     );
