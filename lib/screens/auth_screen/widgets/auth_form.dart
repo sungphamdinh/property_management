@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import '../providers/auth.dart';
-import '../widgets/user_image_picker.dart';
+import '../../../providers/auth.dart';
+import '../../../shared/widgets/user_image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

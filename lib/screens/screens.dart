@@ -5,7 +5,7 @@ export 'messages/messages_screen.dart';
 export 'search_places/seach_places_screen.dart';
 export 'space_detail/space_detail_screen.dart';
 export 'main_screen.dart';
-export 'auth_screen.dart';
+export 'auth_screen/auth_screen.dart';
 export 'account_screen.dart';
 export 'sanbox_screen.dart';
 export 'flash_screen.dart';
