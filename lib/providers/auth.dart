@@ -5,15 +5,22 @@ import 'package:property_management/locator.dart';
 import 'package:property_management/providers/base_provider.dart';
 
 class Auth extends BaseProvider {
-  final authRepository = getIt.get<AuthFireBase>();
+  final _authRepository = getIt.get<AuthFireBase>();
 
   String _userId;
   String get userId => _userId;
 
+  Future<String> getCurrentUserId() async {
+    if (_userId == null || _userId.isEmpty) {
+      return await _authRepository.getCurrentUserId();
+    }
+    return _userId;
+  }
+
   Future<void> loginWithUser(String email, String password) async {
     setState(ProviderState.Busy);
     try {
-      _userId = await this.authRepository.signInWithUser(email, password);
+      _userId = await this._authRepository.signInWithUser(email, password);
       setState(ProviderState.Idle);
     } on PlatformException catch (error) {
       setState(ProviderState.Idle);
@@ -26,7 +33,7 @@ class Auth extends BaseProvider {
     setState(ProviderState.Busy);
     try {
       await this
-          .authRepository
+          ._authRepository
           .signUpWithUser(email, username, password, image);
       setState(ProviderState.Idle);
     } catch (error) {

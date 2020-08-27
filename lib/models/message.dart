@@ -5,7 +5,7 @@ class Message {
   final String content;
   final String creatorId;
   final String receiverId;
-  final DateTime createdDate;
+  final int createdDate;
 
   Message(
       {this.id,
@@ -20,7 +20,7 @@ class Message {
         content: json['content'],
         creatorId: json['creator_id'],
         receiverId: json['receiver_id'],
-        createdDate: DateFormat().parse(json['created_date']));
+        createdDate: json['createdDate']);
   }
 
   Map<String, dynamic> toJson() {
@@ -28,7 +28,7 @@ class Message {
       'content': this.content,
       'creator_id': this.creatorId,
       'receiver_id': this.receiverId,
-      'created_date': DateFormat().format(this.createdDate).toString()
+      'created_date': this.createdDate
     };
   }
 }
