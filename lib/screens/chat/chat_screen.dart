@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:property_management/constants.dart';
 import 'package:property_management/models/message.dart';
+import 'package:property_management/models/user.dart';
 import 'package:property_management/providers/messages.dart';
+import 'package:property_management/providers/users.dart';
 import 'package:provider/provider.dart';
 
 import './widgets/widgets.dart';
@@ -16,47 +19,68 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     final friendId = ModalRoute.of(context).settings.arguments;
-    // final friend =
-    //     Provider.of<Users>(context, listen: false).friendWithId(friendId);
+    final friend =
+        Provider.of<Users>(context, listen: false).friendWithId(friendId);
 
     return Scaffold(
         body: SafeArea(
       child: Column(
         children: [
           Header(
-            avatarUrl:
-                "https://firebasestorage.googleapis.com/v0/b/flutter-chat-27d8e.appspot.com/o/user_images%2FB06dicjY54V9MursatSs6FCZMmI3.jpg?alt=media&token=aa0b4abe-317e-4ae4-8cea-28ccd441c1df",
-            name: 'Sung Pham',
+            avatarUrl: friend.avatarUrl,
+            name: friend.username,
           ),
           Divider(),
           Expanded(
             child: Container(
               color: Colors.white,
-              child: StreamBuilder<List<Message>>(
-                stream:
-                    Provider.of<Messages>(context, listen: false).getMessages(),
-                builder: (ctx, snapshots) {
-                  if (snapshots.connectionState == ConnectionState.waiting) {
+              child: FutureBuilder<User>(
+                future: Provider.of<Users>(context).getCurrentUser(),
+                builder: (ctx, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(
                       child: CircularProgressIndicator(),
                     );
                   } else {
-                    final messages = snapshots.data;
-                    if (messages == null || messages.length == 0)
-                      return Container();
-                    return ListView.builder(
-                      itemBuilder: (ctx, index) {
-                        return MessageBubble(
-                          message: messages[index].content,
-                          username: "Sung Pham",
-                          // isMe: messages[index].receiverId == friendId,
-                          isMe: index % 2 == 0,
-                          time: messages[index].getCreatedDateByHour(),
-                          avatarUrl:
-                              "https://firebasestorage.googleapis.com/v0/b/flutter-chat-27d8e.appspot.com/o/user_images%2FB06dicjY54V9MursatSs6FCZMmI3.jpg?alt=media&token=aa0b4abe-317e-4ae4-8cea-28ccd441c1df",
-                        );
+                    final currentUser = snapshot.data;
+                    return StreamBuilder<List<Message>>(
+                      stream: Provider.of<Messages>(context, listen: false)
+                          .getMessages(currentUser.id),
+                      builder: (ctx, snapshots) {
+                        if (snapshots.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else {
+                          final messages = snapshots.data;
+                          if (messages == null || messages.length == 0)
+                            return Container();
+                          return ListView.builder(
+                            itemBuilder: (ctx, index) {
+                              final isMe =
+                                  messages[index].creatorId == currentUser.id;
+
+                              return Container(
+                                margin:
+                                    EdgeInsets.only(bottom: kDefaultMargin / 3),
+                                child: MessageBubble(
+                                    message: messages[index].content,
+                                    username: isMe
+                                        ? currentUser.username
+                                        : friend.username,
+                                    isMe: isMe,
+                                    time:
+                                        messages[index].getCreatedDateByHour(),
+                                    avatarUrl: isMe
+                                        ? currentUser.avatarUrl
+                                        : friend.avatarUrl),
+                              );
+                            },
+                            itemCount: messages.length,
+                          );
+                        }
                       },
-                      itemCount: messages.length,
                     );
                   }
                 },

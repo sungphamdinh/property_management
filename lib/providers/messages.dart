@@ -22,7 +22,7 @@ class Messages with ChangeNotifier {
     _messages.add(message);
   }
 
-  Stream<List<Message>> getMessages() {
+  Stream<List<Message>> getMessages(String userId) {
     return _messagesRepository.getStreamMessages();
   }
 }

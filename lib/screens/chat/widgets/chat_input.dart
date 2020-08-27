@@ -11,6 +11,7 @@ class ChatInput extends StatefulWidget {
 
 class _ChatInputState extends State<ChatInput> {
   final _textController = TextEditingController();
+  final FocusNode _focusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +25,7 @@ class _ChatInputState extends State<ChatInput> {
                 borderRadius: BorderRadius.circular(12), color: Colors.white),
             child: Center(
               child: TextField(
+                focusNode: _focusNode,
                 controller: _textController,
                 decoration: InputDecoration(
                     contentPadding: EdgeInsets.only(left: kDefaultPadding / 2),
@@ -37,6 +39,7 @@ class _ChatInputState extends State<ChatInput> {
             if (_textController.text.trim().isNotEmpty) {
               widget?.onSendMessage(_textController.text);
               _textController.text = '';
+              _focusNode.unfocus();
             }
           },
           color: Theme.of(context).primaryColor,

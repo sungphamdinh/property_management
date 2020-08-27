@@ -10,7 +10,9 @@ class UsersFireStore implements UsersRepository {
   Future<User> userWithId(String userId) async {
     final userSnapshot =
         await _fireStore.collection(COLLECTION_KEY).document(userId).get();
-    return User.fromJson(userSnapshot.data);
+    final user = User.fromJson(userSnapshot.data);
+    user.id = userSnapshot.documentID;
+    return user;
   }
 
   @override
