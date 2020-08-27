@@ -14,13 +14,18 @@ class Message {
       this.receiverId,
       this.createdDate});
 
+  String getCreatedDateByHour() {
+    return DateFormat('HH:mm')
+        .format(DateTime.fromMicrosecondsSinceEpoch(this.createdDate));
+  }
+
   factory Message.fromJson(Map<String, dynamic> json) {
     return Message(
         id: "",
         content: json['content'],
         creatorId: json['creator_id'],
         receiverId: json['receiver_id'],
-        createdDate: json['createdDate']);
+        createdDate: json['created_date']);
   }
 
   Map<String, dynamic> toJson() {
