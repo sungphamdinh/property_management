@@ -4,6 +4,7 @@ import 'package:property_management/providers/base_provider.dart';
 import 'package:property_management/providers/spaces.dart';
 import 'package:property_management/screens/all_spaces/all_spaces_screen.dart';
 import 'package:property_management/screens/search_places/seach_places_screen.dart';
+import 'package:property_management/shared/my_fade_in.dart';
 import 'package:property_management/shared/widgets/search_box_input.dart';
 import 'package:property_management/screens/space_detail/space_detail_screen.dart';
 import 'package:provider/provider.dart';
@@ -20,9 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(milliseconds: 30), () {
-      Provider.of<Spaces>(context, listen: false).getPlaces();
-    });
+    Provider.of<Spaces>(context, listen: false).getPlaces();
   }
 
   @override
@@ -96,33 +95,38 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Consumer<Spaces>(builder: (ctx, spacesProvider, child) {
                   if (spacesProvider.state == ProviderState.Busy)
-                    return Center(
-                      child: CircularProgressIndicator(),
+                    return Container(
+                      height: SpaceItem.rowHeight,
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
                     );
-                  return Container(
-                    height: SpaceItem.rowHeight,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (ctx, index) {
-                        final space = spacesProvider.spaces[index];
-                        return Padding(
-                          padding:
-                              const EdgeInsets.only(right: kDefaultPadding - 8),
-                          child: SpaceItem(
-                            id: space.id,
-                            spaceName: space.postTitle,
-                            spaceImageUrl: space.imageUrls.first,
-                            spacePricePerMonth: space.price,
-                            spaceStart: 4.5,
-                            onItemPressed: () {
-                              Navigator.of(context).pushNamed(
-                                  SpaceDetailScreen.routeName,
-                                  arguments: space.id);
-                            },
-                          ),
-                        );
-                      },
-                      itemCount: spacesProvider.spaces.length,
+                  return MyFadeIn(
+                    child: Container(
+                      height: SpaceItem.rowHeight,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (ctx, index) {
+                          final space = spacesProvider.spaces[index];
+                          return Padding(
+                            padding: const EdgeInsets.only(
+                                right: kDefaultPadding - 8),
+                            child: SpaceItem(
+                              id: space.id,
+                              spaceName: space.postTitle,
+                              spaceImageUrl: space.imageUrls.first,
+                              spacePricePerMonth: space.price,
+                              spaceStart: 4.5,
+                              onItemPressed: () {
+                                Navigator.of(context).pushNamed(
+                                    SpaceDetailScreen.routeName,
+                                    arguments: space.id);
+                              },
+                            ),
+                          );
+                        },
+                        itemCount: spacesProvider.spaces.length,
+                      ),
                     ),
                   );
                 }),

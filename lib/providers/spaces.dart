@@ -13,7 +13,9 @@ class Spaces extends BaseProvider {
   List<Space> get searchResults => [..._searchResults];
 
   Future<void> getPlaces() async {
-    setState(ProviderState.Busy);
+    Future.delayed(Duration(milliseconds: 50), () {
+      setState(ProviderState.Busy);
+    });
     _spaces = await _spaceRepository.getSpaces();
     setState(ProviderState.Idle);
   }
