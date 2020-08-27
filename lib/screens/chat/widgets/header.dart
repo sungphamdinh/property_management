@@ -40,7 +40,7 @@ class Header extends StatelessWidget {
                     fontWeight: FontWeight.bold),
               ),
               SizedBox(
-                height: kDefaultMargin / 2,
+                height: kDefaultMargin / 3,
               ),
               Status(
                 status: UserStatus.InActive,

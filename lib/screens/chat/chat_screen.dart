@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:property_management/constants.dart';
 import 'package:property_management/models/message.dart';
@@ -16,11 +18,25 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  final _controller = ScrollController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final friendId = ModalRoute.of(context).settings.arguments;
     final friend =
         Provider.of<Users>(context, listen: false).friendWithId(friendId);
+
+    Timer(
+      Duration(seconds: 1),
+      () => _controller.animateTo(_controller.position.maxScrollExtent,
+          duration: Duration(milliseconds: 300), curve: Curves.ease),
+    );
 
     return Scaffold(
         body: SafeArea(
@@ -57,6 +73,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           if (messages == null || messages.length == 0)
                             return Container();
                           return ListView.builder(
+                            controller: _controller,
                             itemBuilder: (ctx, index) {
                               final isMe =
                                   messages[index].creatorId == currentUser.id;
