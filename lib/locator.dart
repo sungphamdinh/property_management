@@ -7,10 +7,8 @@ final getIt = GetIt.instance;
 void setupDependencyInjection() {
   // Data services
   getIt.registerLazySingleton(() => AuthFireBase());
-  getIt.registerLazySingleton(() => UsersFirebaseStorage());
-  getIt.registerLazySingleton(() => SpacesFirebaseStorage());
+  getIt.registerLazySingleton(() => UsersFireStore());
+  getIt.registerLazySingleton(() => SpacesFireStorage());
   getIt.registerLazySingleton(() => KeywordsPrefStorage());
-
-  // Providers
-  getIt.registerLazySingleton(() => HistoryKeywords());
+  getIt.registerLazySingleton(() => MessagesFireStore());
 }

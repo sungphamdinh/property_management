@@ -15,9 +15,7 @@ class _MessageScreenState extends State<MessageScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(milliseconds: 30), () {
-      Provider.of<Users>(context, listen: false).getFriends();
-    });
+    Provider.of<Users>(context, listen: false).getFriends();
   }
 
   @override

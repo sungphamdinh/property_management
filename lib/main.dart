@@ -30,10 +30,12 @@ class MyApp extends StatelessWidget {
           AddSpaceScreen.routeName: (ctx) => AddSpaceScreen(),
           SpaceDetailScreen.routeName: (ctx) => SpaceDetailScreen(),
           SearchPlacesScreen.routeName: (ctx) => ChangeNotifierProvider(
-              create: (ctx) => getIt.get<HistoryKeywords>(),
-              child: SearchPlacesScreen()),
+              create: (ctx) => HistoryKeywords(), child: SearchPlacesScreen()),
           AllSpacesScreen.routeName: (ctx) => AllSpacesScreen(),
-          ChatScreen.routeName: (ctx) => ChatScreen()
+          ChatScreen.routeName: (ctx) => ChangeNotifierProvider(
+                create: (ctx) => Messages(),
+                child: ChatScreen(),
+              )
         },
       ),
     );

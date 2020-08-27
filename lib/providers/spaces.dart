@@ -1,11 +1,10 @@
-import 'package:flutter/foundation.dart';
 import 'package:property_management/data/data.dart';
 import 'package:property_management/locator.dart';
 import 'package:property_management/providers/base_provider.dart';
 import '../models/space.dart';
 
 class Spaces extends BaseProvider {
-  final _spaceRepository = getIt.get<SpacesFirebaseStorage>();
+  final _spaceRepository = getIt.get<SpacesFireStorage>();
 
   List<Space> _spaces = [];
   List<Space> _searchResults = [];

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:property_management/providers/messages.dart';
 import 'package:property_management/screens/chat/widgets/chat_input.dart';
+import 'package:provider/provider.dart';
 import './widgets/widgets.dart';
 
 class ChatScreen extends StatelessWidget {
@@ -22,7 +24,14 @@ class ChatScreen extends StatelessWidget {
           ),
           Divider(),
           Expanded(
-            child: Align(alignment: Alignment.bottomCenter, child: ChatInput()),
+            child: Align(
+                alignment: Alignment.bottomCenter,
+                child: ChatInput(
+                  onSendMessage: (content) {
+                    Provider.of<Messages>(context, listen: false)
+                        .sendMessage(content, friendId);
+                  },
+                )),
           )
         ],
       ),

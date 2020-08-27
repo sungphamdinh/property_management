@@ -2,11 +2,16 @@ import 'package:flutter/material.dart';
 import '../../../constants.dart';
 
 class ChatInput extends StatefulWidget {
+  final Function(String content) onSendMessage;
+  ChatInput({this.onSendMessage});
+
   @override
   _ChatInputState createState() => _ChatInputState();
 }
 
 class _ChatInputState extends State<ChatInput> {
+  final _textController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -19,6 +24,7 @@ class _ChatInputState extends State<ChatInput> {
                 borderRadius: BorderRadius.circular(12), color: Colors.white),
             child: Center(
               child: TextField(
+                controller: _textController,
                 decoration: InputDecoration(
                     contentPadding: EdgeInsets.only(left: kDefaultPadding / 2),
                     hintText: "Type your messages",
@@ -27,7 +33,12 @@ class _ChatInputState extends State<ChatInput> {
             )),
         IconButton(
           icon: Icon(Icons.send),
-          onPressed: () {},
+          onPressed: () {
+            if (_textController.text.trim().isNotEmpty) {
+              widget?.onSendMessage(_textController.text);
+              _textController.text = '';
+            }
+          },
           color: Theme.of(context).primaryColor,
         )
       ],

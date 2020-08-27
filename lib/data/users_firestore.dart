@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:property_management/models/user.dart';
 import 'package:property_management/repositories/users_repository.dart';
 
-class UsersFirebaseStorage implements UsersRepository {
+class UsersFireStore implements UsersRepository {
   final _fireStore = Firestore.instance;
   static const COLLECTION_KEY = 'users';
 

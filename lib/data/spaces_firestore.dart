@@ -6,7 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:property_management/models/space.dart';
 import 'package:property_management/repositories/spaces_repository.dart';
 
-class SpacesFirebaseStorage implements SpacesRepository {
+class SpacesFireStorage implements SpacesRepository {
   final _fireStore = Firestore.instance;
   static const COLLECTION_KEY = 'spaces';
 
